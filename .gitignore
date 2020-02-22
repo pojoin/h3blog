@@ -112,3 +112,5 @@ logs/*
 uploads/*
 !uploads/.gitkeep
 
+.vscode
+
