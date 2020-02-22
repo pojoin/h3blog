@@ -2,11 +2,10 @@
     font-size: 85%;
     padding: .5rem;
     color: #d4d7da;
-    padding: 10px;
 }
 
 .codehilite .hll { background-color: #49483e }
-.codehilite  { background: #272822; color: #f8f8f2 }
+.codehilite  { background: #272822; color: #f8f8f2 ; padding: 10px;}
 .codehilite .c { color: #75715e } /* Comment */
 .codehilite .err { color: #960050; background-color: #1e0010 } /* Error */
 .codehilite .k { color: #66d9ef } /* Keyword */
