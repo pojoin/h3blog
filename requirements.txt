@@ -1,10 +1,10 @@
+Flask_WTF==0.14.3
+Click==7.0
+qiniu==7.2.6
 Flask_SQLAlchemy==2.4.1
+Flask_Sitemap==0.3.0
+Flask==1.1.1
+Flask_Login==0.5.0
 Werkzeug==1.0.0
 WTForms==2.2.1
-Click==7.0
-Flask_Login==0.5.0
-Flask_WTF==0.14.3
-qiniu==7.2.6
-Flask==1.1.1
-Flask_Sitemap==0.3.0
 python-dotenv==0.11.0
