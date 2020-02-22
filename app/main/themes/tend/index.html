@@ -1,0 +1,97 @@
+{% extends 'common/base.html' %}
+{% import "macros/_patination.html" as page_macros %}
+{% block content %}
+<!--轮播图开始-->
+<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+        <li data-target="#carouselExampleIndicators" data-slide-to="0" class=""></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="1" class="active"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="2" class=""></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="3" class=""></li>
+    </ol>
+    <div class="carousel-inner">
+        <div class="carousel-item">
+            <a href="/article/docker-rebuild/">
+                <img class="w-100" src="https://tendcode.com/cdn/article/190122/izone-docker.jpg"
+                    alt="容器化部署博客（3）—— 5分钟完成项目迁移">
+            </a>
+        </div>
+        <div class="carousel-item active">
+            <a href="#">
+                <img class="w-100" src="https://tendcode.com/cdn/article/180418/bsblog.png"
+                    alt="在 Linux 服务器上使用 Nginx + Gunicorn 部署 Django 项目的正确姿势">
+            </a>
+        </div>
+        <div class="carousel-item">
+            <a href="#">
+                <img class="w-100" src="https://tendcode.com/cdn/article/080414/virtualenv.png"
+                    alt="Python虚拟环境Virtualenv分别在Windows和Linux上的安装和使用">
+            </a>
+        </div>
+        <div class="carousel-item">
+            <a href="#">
+                <img class="w-100" src="https://tendcode.com/cdn/article/180415/jiandan.png" alt="煎蛋网妹子图爬虫">
+            </a>
+        </div>
+
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
+<!--轮播图结束-->
+<!--排序方式-->
+<div class="text-secondary font-weight-bold py-2 f-15 choice">
+    <a class="pb-2 {{ 'active' if request.path == url_for('.index') else '' }}" href="{{url_for('.index')}}">
+        <i class="fa fa-bars mr-1"></i>时间排序</a>
+    <a class="pb-2 ml-4 {{ 'active' if request.path == url_for('.hot') else ''}}" href="{{url_for('.hot')}}">
+        <i class="fa fa-fire mr-1"></i>热度排序</a>
+</div>
+<!--排序方式结束-->
+<!--文章列表-->
+<div class="summary-list">
+    {% for a in articles.items %}
+    <div class="media mb-1 mb-sm-2 p-2 p-lg-3">
+        <div class="align-self-center mr-2 mr-lg-3 w-25 modal-open">
+            <a href="{{url_for('main.article',name=a.name)}}" target="_blank">
+                <img class="w-100 article-img" src="{{a.thumbnail}}" alt="{{a.title}}">
+            </a>
+        </div>
+        <div class="media-body">
+            <div class="text-muted mb-2 f-12">
+                <img class="avatar" src="{{url_for('.static',filename='img/avatar.jpg')}}"
+                    alt="何三">
+                <span>何三</span>
+                <span><i class="fa fa-calendar-times-o ml-2 mr-1"></i>{{a.timestamp|pretty_date}}</span>
+            </div>
+            <h2 class="mt-0 font-weight-bold text-info f-17">
+                <a href="{{url_for('main.article',name=a.name)}}" target="_blank">{{a.title}}</a>
+            </h2>
+            {% with c_html = a.content_to_html() %}
+            <p class="d-none d-sm-block mb-2 f-15">{{c_html|striptags|truncate(120,killwords=True,leeway=0) }}</p>
+            <p class="d-block d-sm-none mb-2 f-15">{{c_html |truncate(64,killwords=True,leeway=0) }}</p>
+            {% endwith %}
+            <div class="text-muted mb-0 f-12">
+                <a class="cate" href="/category/{{a.category.name}}" title="查看当前分类下更多文章">
+                    <i class="fa fa-book mr-1"></i>{{a.category.title}}</a>
+                <span><i class="fa fa-eye ml-2 mr-1"></i>{{a.vc}}</span>
+                
+                <!-- <a href="/article/abc/#comment-block" target="_blank" title="查看文章评论">
+                    <i class="fa fa-comments ml-2 mr-1"></i>17</a> -->
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+</div>
+<!--文章列表结束-->
+<div>
+    {{ page_macros.pagination_widget(articles, '.hot' if request.path == url_for('.hot') else '.index') }}
+</div>
+
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'common/base.html' %}
+{% import "macros/_patination.html" as page_macros %}
+{% block title %}
+文章归档大全-{{ super() }}
+{% endblock %}
+{% block css%}
+{{super()}}
+<style type="text/css">
+    .archive {
+        line-height:2;
+    }
+</style>
+{% endblock%}
+{% block content %}
+<!--面包导航-->
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb bg-white border-0 rounded-0 mb-2 py-2 f-15">
+        <li class="breadcrumb-item">
+            <i class="fa fa-home mr-1"></i><a href="/">首页</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="{{url_for('main.archive')}}">本站归档</a>
+        </li>
+    </ol>
+</nav>
+<!--end-->
+<div class="card border-0 rounded-0 mb-3">
+    <div class="card-body f-16 archive">
+        {% for tag in time_tag%}
+        <ul class="pl-4">
+            <li>{{tag.name}}
+                <ul class="pl-4">
+                {% for a in tag.articles %}
+                <li class="text-info">{{a.timestamp.strftime("%m-%d")}}&nbsp;&nbsp;<a href="{{url_for('main.article',name=a.name)}}">{{a.title}}</a></li>
+                {% endfor %}
+                </ul>
+            </li>
+        </ul>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

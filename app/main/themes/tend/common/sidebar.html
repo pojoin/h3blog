@@ -1,0 +1,103 @@
+<!--个人空间-->
+<div class="card border-0 rounded-0 px-3 mb-2 mb-md-3 d-none d-lg-block" id="home-card">
+    <div class="card-header bg-white px-0">
+        <strong><i class="fa fa-paper-plane mr-2 f-17"></i>公众号</strong>
+        <img class="float-right" id="theme-img"
+             src="{{url_for('main.static',filename='img/toggle-light.png')}}"
+             alt="theme-toggle" title="切换主题">
+    </div>
+    <div class="card-body px-0 pt-3 pb-1">
+        <div class="row text-center">
+            <img class="rounded" style="width: 90%; height: 90%;" src="{{url_for('.static',filename='img/qrcode_for_python_shouyiren.jpg')}}">
+        </div>
+    </div>
+</div>
+<!--文章分类-->
+<div class="card border-0 rounded-0 px-3 mb-2 mb-md-3" id="category-card">
+    <div class="card-header bg-white px-0">
+        <strong><i class="fa fa-book mr-2 f-17"></i>文章分类</strong>
+    </div>
+    
+    <ul class="list-group list-group-flush f-16">
+        {% for c in g.categorys %}
+        <li class="list-group-item d-flex justify-content-between align-items-center pr-2 py-2">
+            <a class="category-item" href="{{url_for('main.category',c=c.name)}}"
+               title="查看【{{c.title}}】分类下所有文章">{{c.title}}</a>
+            <span class="badge text-center">{{c.articles.count()}}</span>
+        </li>
+        {% endfor %}
+        
+    </ul>
+</div>
+<!--标签云-->
+<div class="card border-0 rounded-0 px-3 mb-2 mb-md-3" id="tag-card">
+    <div class="card-header bg-white px-0">
+        <strong><i class="fa fa-tags mr-2 f-17"></i>标&nbsp;签&nbsp;云</strong>
+    </div>
+    <div class="card-body px-0 py-3">
+        <div class="tag-cloud"> 
+         {% for t in g.tags %}
+         <a href="/tag/{{t.name}}/" class="tags f-16" id="tag-{{t.id}}"
+            title="{{t.name}}">{{t.name}}</a>
+         {% endfor %}
+        </div>
+    </div>
+</div>
+<!--友链-->
+<!--
+<div class="d-none d-lg-block">
+    <div class="card border-0 rounded-0 px-3 mb-2 mb-md-3" id="friends-card">
+        <div class="card-header bg-white px-0">
+            <strong><i class="fa fa-link mr-2 f-17"></i>友情链接</strong>
+        </div>
+        <div class="card-body px-0 py-3">
+            <div class="tool-list">
+                
+                
+                <div class="w-50 float-left text-center mb-2">
+                    <div class="mx-2">
+                        <a href="https://github.com/Hopetree/izone" title="izone 博客项目的源代码" target="_blank">
+                            博客源码</a>
+                    </div>
+                </div>
+                
+                <div class="w-50 float-left text-center mb-2">
+                    <div class="mx-2">
+                        <a href="https://frostming.com" title="一个基于 Flask 开发的博客" target="_blank">
+                            Frost&#39;s Blog</a>
+                    </div>
+                </div>
+                
+                <div class="w-50 float-left text-center mb-2">
+                    <div class="mx-2">
+                        <a href="https://zmrenwu.com" title="Django 博客教程分享者" target="_blank">
+                            追梦人物</a>
+                    </div>
+                </div>
+                
+                <div class="w-50 float-left text-center mb-2">
+                    <div class="mx-2">
+                        <a href="https://www.dusaiphoto.com/" title="Django 搭建的博客，分享博客教程" target="_blank">
+                            杜赛的个人网站</a>
+                    </div>
+                </div>
+                
+                <div class="w-50 float-left text-center mb-2">
+                    <div class="mx-2">
+                        <a href="https://www.jerrycoding.com/" title="Jerry 的个人博客" target="_blank">
+                            Jerry Coding</a>
+                    </div>
+                </div>
+                
+                <div class="w-50 float-left text-center mb-2">
+                    <div class="mx-2">
+                        <a href="https://boywithacoin.cn/" title="Stray_Camel的个人技术博客" target="_blank">
+                            Stray_Camel</a>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+-->

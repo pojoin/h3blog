@@ -1,0 +1,60 @@
+<nav id="sidebar" class="col-2 d-md-block bg-light sidebar">
+    <div class="sidebar-sticky">
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link active" href="{{url_for('admin.index')}}">
+            <span data-feather="home"></span>
+            面板 <span class="sr-only">(current)</span>
+          </a>
+        </li>
+      </ul>
+
+      <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 pt-2 pb-2 mt-2 mb-2 text-muted border-top border-bottom border-secondary">
+        <span>文章管理</span>
+        <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
+          <span data-feather="plus-circle"></span>
+        </a>
+      </h6>
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('admin.write') }}">
+            <span data-feather="file"></span>
+            写文章
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{url_for('admin.articles')}}">
+            <span data-feather="shopping-cart"></span>
+            文章列表
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{url_for('admin.categorys')}}">
+            <span data-feather="users"></span>
+            分类列表
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <span data-feather="bar-chart-2"></span>
+            标签管理
+          </a>
+        </li>
+      </ul>
+
+      <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 pt-2 pb-2 mt-2 mb-2 text-muted border-top border-bottom border-secondary">
+        <span>设置</span>
+        <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
+          <span data-feather="plus-circle"></span>
+        </a>
+      </h6>
+      <ul class="nav flex-column mb-2">
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <span data-feather="file-text"></span>
+            网站设置
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>

@@ -1,0 +1,73 @@
+{% extends 'common/base.html' %}
+{% import "macros/_patination.html" as page_macros %}
+{% block title %}
+{{category.title}}-{{ super() }}
+{% endblock %}
+{% block content %}
+<!--面包导航-->
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb bg-white border-0 rounded-0 mb-2 py-2 f-15">
+        <li class="breadcrumb-item">
+            <i class="fa fa-home mr-1"></i><a href="/">首页</a>
+        </li>
+        <li class="breadcrumb-item">文章分类</li>
+        <li class="breadcrumb-item">
+            <a href="{{url_for('main.category',c=category.name)}}">{{category.title}}</a>
+        </li>
+    </ol>
+</nav>
+<!--end-->
+<!--排序方式-->
+<div class="text-secondary font-weight-bold py-2 f-15 choice">
+    <a class="pb-2 {{ 'active' if orderby == 'time' else '' }}" href="{{url_for('.category',c=category.name)}}">
+        <i class="fa fa-bars mr-1"></i>时间排序</a>
+    <a class="pb-2 ml-4 {{ 'active' if orderby == 'hot' else ''}}" href="{{url_for('.category_hot',c=category.name)}}">
+        <i class="fa fa-fire mr-1"></i>热度排序</a>
+</div>
+<!--排序方式结束-->
+<!--文章列表-->
+<div class="summary-list">
+    {% for a in articles.items %}
+    <div class="media mb-1 mb-sm-2 p-2 p-lg-3">
+        <div class="align-self-center mr-2 mr-lg-3 w-25 modal-open">
+            <a href="{{url_for('main.article',name=a.name)}}" target="_blank">
+                <img class="w-100 article-img" src="{{a.thumbnail}}" alt="{{a.title}}">
+            </a>
+        </div>
+        <div class="media-body">
+            <div class="text-muted mb-2 f-12">
+                <img class="avatar" src="{{url_for('.static',filename='img/avatar.jpg')}}"
+                    alt="何三">
+                <span>何三</span>
+                <span><i class="fa fa-calendar-times-o ml-2 mr-1"></i>{{a.timestamp|pretty_date}}</span>
+            </div>
+            <h2 class="mt-0 font-weight-bold text-info f-17">
+                <a href="{{url_for('main.article',name=a.name)}}" target="_blank">{{a.title}}</a>
+            </h2>
+            {% with c_html = a.content_to_html() %}
+            <p class="d-none d-sm-block mb-2 f-15">{{c_html|striptags|truncate(120,killwords=True,leeway=0) }}</p>
+            <p class="d-block d-sm-none mb-2 f-15">{{c_html |truncate(64,killwords=True,leeway=0) }}</p>
+            {% endwith %}
+            <div class="text-muted mb-0 f-12">
+                <a class="cate" href="/category/{{a.category.name}}" title="查看当前分类下更多文章">
+                    <i class="fa fa-book mr-1"></i>{{a.category.title}}</a>
+                <span><i class="fa fa-eye ml-2 mr-1"></i>{{a.vc}}</span>
+                
+                <!-- <a href="/article/abc/#comment-block" target="_blank" title="查看文章评论">
+                    <i class="fa fa-comments ml-2 mr-1"></i>17</a> -->
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+</div>
+<!--文章列表结束-->
+<div>
+    {% if orderby == 'hot' %}
+    {{ page_macros.pagination_widget(articles, '.category_hot',c=category.name) }}
+    {% else %}
+    {{ page_macros.pagination_widget(articles, '.category',c=category.name) }}
+    {% endif %}
+</div>
+
+{% endblock %}

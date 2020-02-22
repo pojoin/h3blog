@@ -1,0 +1,14 @@
+<!-- flash提示 -->
+</script>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                {% if message['success'] %}
+                    <script>toastr.success("{{ message['success'] }}");</script>
+                {% elif message['error'] %}
+                    <script>toastr.error("{{ message['error'] }}");</script>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+<!-- flash提示 end -->

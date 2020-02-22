@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="icon" href="{{ url_for('.static', filename='img/favicon.ico')}}">
+
+        <title>{% block title %}何三笔记{% endblock %}</title>
+        {% block css %}
+            <!-- Bootstrap 4.4.1 core CSS -->
+            <link href="{{ url_for('.static', filename='css/bootstrap.min.css')}}" rel="stylesheet">
+            <!-- font-awesome 主题文件 -->
+            <link href="{{url_for('.static',filename='css/font-awesome.min.css')}}"
+                  rel="stylesheet">
+            <meta name="theme-color" content="#563d7c">
+            <!-- 个性化主题文件 -->
+            <link href="{{ url_for('admin.static', filename='css/admin.css')}}" rel="stylesheet">
+            <link href="{{ url_for('admin.static',filename='css/toastr.min.css')}}" rel="stylesheet">
+        {% endblock %}
+        
+    </head>
+
+    <body>
+        {% include 'admin/common/header.html' %}
+        <div class="container-fluid">
+            <div class="row">
+                {% include 'admin/common/sidebar.html' %}
+                <main role="main" class="col ml-sm-auto col-lg-10 px-4">
+                    {% block content %}{% endblock %}
+                </main><!--/main-->
+            </div><!--/row-->
+        </div><!--/.container-->
+        <!--js合集-->
+        {% block js %}
+            <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+            <script src="{{ url_for('admin.static',filename='js/jquery.min.js') }}"></script>
+            <script src="{{ url_for('admin.static',filename='js/popper.min.js') }}"></script>
+            <script src="{{ url_for('admin.static',filename='js/bootstrap.min.js') }}"></script>
+            <script src="{{ url_for('admin.static',filename='js/toastr.min.js')}}"></script>
+            <!-- 个性化 js 文件 -->
+            <script src="{{ url_for('admin.static', filename='js/admin.js')}}"></script>
+        {% endblock %}
+    </body>
+</html>

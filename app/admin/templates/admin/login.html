@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Jekyll v3.8.6">
+    <link rel="icon" href="{{ url_for('admin.static', filename='images/favicon.ico')}}">
+    <title>博客登陆</title>
+
+    <!-- Bootstrap 4.4.1 core CSS -->
+    <link href="{{ url_for('admin.static', filename='css/bootstrap.min.css')}}" rel="stylesheet">
+    <!-- Favicons -->
+    <link rel="icon" href="{{ url_for('admin.static', filename='img/favicon.ico')}}">
+    <meta name="theme-color" content="#563d7c">
+
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+
+        body {
+            background-image:url(https://io.lookyes.cn/bing/);
+            background-size: cover; 
+        }
+        #login {
+            filter:alpha(Opacity=80);
+            -moz-opacity:0.8;
+            opacity: 0.8;
+        }
+    </style>
+    <!-- Custom styles for this template -->
+    <link href="{{ url_for('admin.static', filename='css/login.css')}}" rel="stylesheet">
+    <link href="{{ url_for('admin.static',filename='css/toastr.min.css')}}" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <img class="mb-4" src="{{ url_for('admin.static',filename='img/logo.jpg')}}" alt="" >
+        </div>
+        <div class="row justify-content-center">
+            <div id="login" class="card">
+                <div class="card-body">
+                    <form class="form-signin" method="post">
+                        {{ loginForm.hidden_tag() }}
+
+                        <!-- <h1 class="h3 mb-3 font-weight-normal">博客登陆</h1> -->
+                        <label for="username" class="sr-only">帐号</label>
+                        {{ loginForm.username(id="username",class="form-control", placeholder="帐 号",required="", autofocus="") }}
+                        <label for="password" class="sr-only">密码</label>
+                        {{ loginForm.password(id="password",class="form-control",placeholder="密 码",required="")}}
+                        <div class="checkbox mb-3">
+                            <label>
+                                {{ loginForm.remember_me() }} {{ loginForm.remember_me.label(class="small") }}
+                            </label>
+                        </div>
+                        {{ loginForm.submit(class="btn btn-ls btn-primary btn-block") }}
+                    </form>
+                </div>
+            </div>
+            <!--end card-->
+        </div>
+    </div>
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="{{ url_for('admin.static',filename='js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('admin.static',filename='js/popper.min.js') }}"></script>
+    <script src="{{ url_for('admin.static',filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('admin.static',filename='js/toastr.min.js')}}"></script>
+    <script src="{{ url_for('admin.static',filename='js/admin.js')}}"></script>
+    {% include 'admin/common/alert.html' %}
+</body>
+
+</html>

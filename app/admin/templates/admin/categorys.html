@@ -1,0 +1,39 @@
+{% extends 'admin/common/base.html' %}
+{% import "admin/macros/_patination.html" as page_macros %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div>
+        <h3>分类列表</h3> <a href="{{url_for('admin.categroy_add')}}">添加</a>
+        </div>
+        <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">名称</th>
+                <th scope="col">标识</th>
+                <th scope="col">时间</th>
+                <th scope="col">操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for c in categorys.items %}
+              <tr>
+                <th scope="row">{{c.id}}</th>
+                <td>{{ c.title }}</td>
+                <td>{{c.name}}</td>
+                <td></td>
+                <td>
+                    <a href="{{url_for('admin.categroy_edit',id=c.id)}}"
+                    class="btn btn-outline-primary btn-sm">修改</a>
+                    <a href="" class="btn btn-outline-danger btn-sm">删除</a>
+                </td>
+                    
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+    </div>
+    {{ page_macros.pagination_widget(categorys, 'admin.categorys') }}
+</div>
+{% endblock %}

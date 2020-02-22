@@ -1,0 +1,41 @@
+{% extends 'admin/common/base.html' %}
+{% import "admin/macros/_patination.html" as page_macros %}
+{% block content %}
+<div class="admin-content">
+    <div class="row">
+        <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">标题</th>
+                <th scope="col">分类</th>
+                <th scope="col">状态</th>
+                <th scope="col">时间</th>
+                <th scope="col">作者</th>
+                <th scope="col">操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for article in articles.items %}
+              <tr>
+                <th scope="row">{{article.id}}</th>
+                <td>{{ article.title|title }}</td>
+                <td>{{ article.category.title}}</td>
+                <td>{{ '已发布' if article.state == 1 else '草稿'}}</td>
+                <td>{{ article.timestamp.strftime("%Y-%m-%d %H:%M:%S") }}</td>
+                <td>{{ article.author.username }}</td>
+                <td>
+                    <a href="{{url_for('admin.article_edit',id=article.id)}}"
+                    class="btn btn-outline-primary btn-sm">修改</a>
+                    <a href="" class="btn btn-outline-danger btn-sm">删除</a>
+                    <a href="{{url_for('main.article',name=article.name)}}" target="_blank" class="btn btn-outline-info btn-sm">预览</a>
+                </td>
+                    
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+    </div>
+    {{ page_macros.pagination_widget(articles, 'admin.articles') }}
+</div>
+{% endblock %}

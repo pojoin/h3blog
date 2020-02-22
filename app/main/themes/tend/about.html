@@ -1,0 +1,19 @@
+{% extends 'common/base.html' %}
+{% import "macros/_patination.html" as page_macros %}
+{% block title %}
+关于本站-{{ super() }}
+{% endblock %}
+{% block content %}
+<div class="card rounded-0 border-0 p-3 f-16">
+<h2>关于本站</h2>
+<hr>
+<p>
+    作为一名技术人员，比较诚恳的来说，python不是我的首先语言，
+    但从我接触python开始，我发现真的是：<strong>人生苦短，我用python！</strong>
+    <br>
+    本站主要用来记录以博主以python为核心的心路历程，本站也是使用python语言开发的，
+    但不是从零开发的，初期是使用网络开源项目拼凑而成，优化网站的过程中，我也会把网站源码开发
+    出来，使用开源，也贡献开源。
+</p>
+</div>
+{% endblock %}

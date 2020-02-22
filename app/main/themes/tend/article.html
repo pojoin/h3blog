@@ -1,0 +1,170 @@
+{% extends 'common/base.html' %}
+{% block css %}
+{{ super() }}
+<link href="{{ url_for('main.static', filename='css/detail.css') }}" rel="stylesheet">
+<link href="{{ url_for('main.static', filename='css/monokai.css') }}" rel="stylesheet">
+<link href="{{ url_for('main.static', filename='css/base_comment.css') }}" rel="stylesheet">
+{% endblock %}
+{% block title %}
+{{ super() }}-{{ article.title }}
+{% endblock %}
+{% block content %}
+<div class="col">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bg-white border-0 rounded-0 mb-2 py-2 f-15">
+            <li class="breadcrumb-item">
+                <i class="fa fa-home mr-1"></i><a href="/">首页</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="{{url_for('main.category',c=article.category.name)}}">{{article.category.title}}</a>
+            </li>
+            <li class="breadcrumb-item active d-none d-md-block" aria-current="page">{{article.title}}</li>
+            <li class="breadcrumb-item active d-md-none" aria-current="page">当前位置</li>
+        </ol>
+    </nav>
+    <div class="card rounded-0 border-0" id="article">
+        <div class="card-body px-2 px-md-3 pb-0">
+            <h1 class="card-title text-center font-weight-bold text-info">{{article.title}}</h1>
+            <hr>
+            <div class="text-center f-13">
+                <span class="mx-2" data-toggle="tooltip" data-placement="bottom" title=""
+                    data-original-title="最后编辑于{{article.timestamp.strftime("%Y年%m月%d日")}}">{{article.timestamp.strftime("%Y年%m月%d日 %H:%M")}}</span>
+                <span class="mx-2">阅读 {{article.vc}}</span>
+                <!-- <a class="mx-2 to-com" href="#comment-block">评论 1</a> -->
+            </div>
+            <div class="article-body mt-4 f-17" style="line-height:1.8">
+                {{article.content_to_html()|safe}}
+            </div>
+            <blockquote class="p-1 f-14" style="border-left: 4px solid #dc3545;">
+                <p class="m-1"><strong>版权声明：</strong>如无特殊说明，文章均为本站原创，转载请注明出处</p>
+                <p class="m-1"><strong>本文链接：</strong>{{request.url}}</p>
+            </blockquote>
+            <div class="tag-cloud my-4">
+                {% for tag in article.tags %}
+                <a class="tags f-16" href="{{url_for('main.tag',t=tag.name)}}">{{tag.name}}</a>
+                {% endfor %}
+            </div>
+            <nav class="more-page f-16">
+                <ul class="pagination justify-content-between">
+                    <li class="page-item">
+                        {% with a = article.previous %}
+                        {% if a %}
+                        <a class="d-none d-md-block" href="{{url_for('main.article',name=a.name)}}"
+                            title="上一篇：{{a.title}}">
+                            <i class="fa fa-chevron-left mr-1"></i>
+                            {{a.title}}
+                        </a>
+                        <a class="d-md-none" href="{{url_for('main.article',name=a.name)}}">
+                            <i class="fa fa-chevron-left mr-1"></i>上一篇</a>
+                        {% endif %}
+                        {% endwith %}
+                    </li>
+                    <li class="page-item">
+                        {% with a = article.next %}
+                        {% if a %}
+                        <a class="d-none d-md-block" href="{{url_for('main.article',name=a.name)}}"
+                            title="下一篇：{{a.title}}">
+                            {{a.title}}
+                            <i class="fa fa-chevron-right ml-1"></i>
+                        </a>
+                        <a class="d-md-none" href="{{url_for('main.article',name=a.name)}}">
+                            下一篇<i class="fa fa-chevron-right ml-1"></i>
+                        </a>
+                        {% endif %}
+                        {% endwith %}
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="text-center">
+                <button class="btn btn-danger rounded-0" data-toggle="collapse" data-target=".multi-collapse"
+                    aria-expanded="false" aria-controls="sponsor-zfb sponsor-wx"
+                    style="line-height: 1;font-size: .8rem;">
+                    <i class="fa fa-cny"></i>
+                    如果文章对你有所帮助，可以赞助本站
+                    <i class="fa fa-chevron-down"></i>
+                </button>
+            </div>
+            <div class="row p-3">
+                <div class="col text-center">
+                    <div class="collapse multi-collapse" id="sponsor-wx">
+                        <div class="p-1 text-success">微信</div>
+                        <img class="w-75" src="http://cdn.h3blog.com/wechat-qr-code.png">
+                    </div>
+                </div>
+                <div class="col text-center">
+                    <div class="collapse multi-collapse" id="sponsor-zfb">
+                        <div class="p-1 text-primary">支付宝</div>
+                        <img class="w-75" src="http://cdn.h3blog.com/alipay-qr-code.png">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--
+    <div class="card mt-2 rounded-0 border-0" id="comment-block">
+
+        <div class="card border-0 rounded-0 f-16" id="editor-block">
+
+            <div class="card-body text-center m-2 m-md-3 f-16" id="no-editor">
+                <div>您尚未登录，请
+                    <a class="text-danger" href="/accounts/login/?next=/article/python-spider-sina-weipan/">登录</a> 或
+                    <a class="text-danger" href="/accounts/signup/?next=/article/python-spider-sina-weipan/">注册</a> 后评论
+                </div>
+                <div class="login-link mt-2">
+                    <a class="mx-3" href="/accounts/weibo/login/?next=/article/python-spider-sina-weipan/"
+                        title="社交账号登录有点慢，请耐心等候！"><i class="fa fa-weibo fa-2x"></i></a>
+                    <a class="mx-3" href="/accounts/github/login/?next=/article/python-spider-sina-weipan/"
+                        title="社交账号登录有点慢，请耐心等候！"><i class="fa fa-github fa-2x"></i></a>
+                </div>
+            </div>
+
+        </div>
+
+        
+        <div class="card-body p-2 p-md-3 f-17" id="comment-list">
+            <ul class="list-unstyled">
+                <div class="mb-3">
+                    <strong>1&nbsp;人参与&nbsp;|&nbsp;1&nbsp;条评论</strong>
+                </div>
+
+                <div class="comment-parent pt-2" id="com-624">
+                    <li class="media">
+
+
+                        <img class="avatar" src="https://avatars3.githubusercontent.com/u/48463320?v=4"
+                            alt="duanrungang">
+
+                        <div class="media-body ml-2">
+                            <a class="float-right small mr-2 rep-btn" href="#editor-block" data-repid="624"
+                                data-repuser="duanrungang">回复</a>
+                            <p class="mt-0 mb-1">
+
+
+                                <strong>
+                                    <a href="https://github.com/duanrungang" title="前往 duanrungang 的个人网站"
+                                        target="_blank">duanrungang
+                                    </a>
+                                </strong>
+
+
+
+                                <i class="fa fa-github" title="Github 绑定用户"></i>
+
+
+
+                            </p>
+                            <p class="small text-muted">1&nbsp;楼&nbsp;-&nbsp;3月，1&nbsp;周前</p>
+                        </div>
+                    </li>
+                    <div class="comment-body">
+                        <p>博主你好，你的文章写的真好，对我很有帮助！！非常感谢！</p>
+                    </div>
+                </div>
+
+            </ul>
+        </div>
+    </div>
+    -->
+</div>
+{% endblock %}

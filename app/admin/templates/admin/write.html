@@ -1,0 +1,195 @@
+{% extends 'admin/common/base.html' %}
+{% block css %}
+{{ super() }}
+<link rel="stylesheet" href="{{url_for('.static',filename='editor_md/editormd.min.css')}}">
+<link rel="stylesheet" href="{{url_for('.static',filename='css/write.css')}}">
+{% endblock %}
+{% block js %}
+{{ super() }}
+<script src="{{url_for('.static',filename='editor_md/editormd.min.js')}}"></script>
+<script>
+    var myEditor;
+    $(function () {
+        myEditor = editormd("write-editor", {
+            // width: '100%',
+            height: '450px',
+            syncScrolling: "single",
+            path: "{{url_for('.static',filename='editor_md/lib/')}}",
+            emoji: true,//emoji表情，默认关闭
+            watch: true, // 关闭实时预览
+            taskList: true,
+            tocm: true, // Using [TOCM]
+            tex: true,// 开启科学公式TeX语言支持，默认关闭
+            //flowChart: true,//开启流程图支持，默认关闭
+            //sequenceDiagram: true,//开启时序/序列图支持，默认关闭,
+            //启动本地图片上传功能
+            imageUpload: true,
+            imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+            imageUploadURL: "{{url_for('.upload')}}",
+            toolbarIcons: function () {
+                // Or return editormd.toolbarModes[name]; // full, simple, mini
+                // Using "||" set icons align right.
+                // ["undo", "redo", "|", "bold", "del", "italic", "quote", "|", "h1", "h2", "h3", "h4",
+                //     "h5", "h6", "|", "list-ul", "list-ol", "hr", "|", "link", "reference-link", "image",
+                //     "code", "code-block", "table", "datetime", "html-entities", "goto-line", "search", "||",
+                //     "fullscreen", "watch", "preview", "info", "|", "publish"]
+                return ["bold", "del", "italic", "quote", "|", "h2", "h3", "h4",
+                    "|", "list-ul", "list-ol", "hr", "|", "link", "reference-link", "image",
+                    "code", "code-block", "table", "|", "watch", "fullscreen"]
+            },
+            // 用于增加自定义工具栏的功能，可以直接插入HTML标签，不使用默认的元素创建图标
+            toolbarCustomIcons: {
+                publish: '<button id="publish" type="button" class="btn btn-primary btn-xs" ' +
+                    'data-toggle="modal" data-target="#myModal">发表文章</button>'
+            }
+        });
+
+        function save(state) {
+            $.ajax({
+                url: '{{url_for("admin.write")}}',
+                type: "post",
+                data: $("form").serialize(),
+                dataType: 'json',
+                success: function (res) {
+                    if (res.code == 1) {
+                        if (res.id) {
+                            $('#id').val(res.id);
+                        }
+                        toastr.success(res.msg);
+                    } else {
+                        toastr.error(res.msg);
+                    }
+                },
+                fail: function (res) {
+                    toastr.error('网络错误');
+                }
+            })
+        }
+
+        //注册点击事件
+        $('#form').on('submit', function (ev) {
+            ev.preventDefault();
+            var content = $('#hidden-body').val();
+            var summary = content.replace(/#*.*#/g, '').replace(/[^a-z0-9\u4e00-\u9fa5]/, '').substring(0, 200) // 除去标题部分，截取200个字用来显示
+            $('#summary').val(summary);
+            save(1);
+        });
+
+        //注册草稿按钮
+        $('#draft').click(function (e) {
+            $('#state').val(0);
+            $('#form').submit();
+        });
+
+        //注册发布按钮点击
+        $('#publish').click(function (e) {
+            $('#state').val(1);
+            $('#form').submit();
+        });
+
+        //上传图片
+        $('#thumbnail-upload-btn').click(function (e) {
+            $("#img-file").trigger("click");
+        });
+
+        $("#img-file").change(function () {
+            var formdata = new FormData();
+            formdata.append('editormd-image-file', $("#img-file")[0].files[0]); //获取图片信息
+            $.ajax({
+                url: "{{url_for('admin.upload')}}",
+                type: 'post',
+                data: formdata,
+                cache: false,
+                dataType: 'json',
+                processData: false,
+                contentType: false,
+                success: function (res) {
+                    if (res.success === 1) {
+                        toastr.success(res.message)
+                        $('#thumbnail-img').attr('src', res.url);
+                        $('#thumbnail').val(res.url);
+                    } else {
+                        toastr.error(res.message)
+                    }
+                }
+            });
+        });
+
+        //固定路径编辑
+        $('#baseURL').html(window.location.protocol + "//" + window.location.host + '/');
+    })
+</script>
+{% endblock %}
+{% block content %}
+<div class="content-wrapper" style="min-height: 600px;">
+    <section class="content-header">
+        <h3>撰写</h3>
+    </section>
+    <section class="content">
+        <form id="form" method="POST">
+            {{ form.hidden_tag() }}
+            <div class="row">
+                <div class="col">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-default">标题</span>
+                        </div>
+                        {{form.title(class='form-control')}}
+                    </div>
+                    <div class="mb-2 ml-2">
+                        网址:<span
+                            id="baseURL">http://www.h3blog.com/</span>article/{{form.name(class='border-top-0 border-left-0 border-right-0 input-small')}}
+                    </div>
+                    <div class="write-article">
+                        <div id="write-editor">
+                            {{form.content(id='hidden-body',class='hidden')}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div id="saveBtns" class="card">
+                        <div class="card-body">
+                            {{form.save(id='save',class="btn btn-primary btn-sm")}}
+                            <button id='draft' type="button" class="btn btn-secondary btn-sm">草稿</button>
+                            <button id='publish' type="button" class="btn btn-success btn-sm">发布</button>
+                        </div>
+                    </div>
+                    <!--save btn end-->
+
+                    <div id="category" class="card mt-3">
+                        <h6 class="card-title p-2 border-bottom">分类</h6>
+                        <div class="card-body">
+                            {{form.category_id(id='category_id',class='form-control')}}
+                        </div>
+                    </div>
+                    <!--category end-->
+                    <div id="tags" class="card mt-3">
+                        <h6 class="card-title p-2 border-bottom">标签</h6>
+                        <div class="card-body">
+                            {{form.tags(class='form-control')}}
+                        </div>
+                    </div>
+                    <!--tags end-->
+                    <div id="thumbnail-div" class="card mt-3">
+                        <h6 class="card-title p-2 border-bottom">缩略图</h6>
+                        <div class="card-body">
+                            <input type="file" hidden id="img-file" />
+                            <img id="thumbnail-img"
+                                src="{{form.thumbnail.data if form.thumbnail.data else url_for('static',filename='img/thumbnail.jpg')}}"
+                                class="card-img-top" alt="缩略图">
+                            <div class="mt-2">
+                                <button id="thumbnail-upload-btn" type="button"
+                                    class="btn btn-outline-secondary btn-sm">选择图片</button>
+                                <a href="#" class="ml-3">移除</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!--thumbnail end-->
+
+                </div>
+            </div>
+        </form>
+
+    </section>
+</div>
+{% endblock %}
