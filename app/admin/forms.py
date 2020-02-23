@@ -82,8 +82,8 @@ class ArticleForm(FlaskForm):
     
     def __init__(self,*args,**kwargs):
         super(ArticleForm, self).__init__(*args, **kwargs)
-        self.category_id.choices = [(category.id, category.name)
-                                 for category in Category.query.order_by(Category.name).all()]
+        self.category_id.choices = [(category.id, category.title)
+                                 for category in Category.query.order_by(Category.title).all()]
 
     def validate_name(self,field):
         """
