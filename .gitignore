@@ -113,5 +113,5 @@ uploads/*
 
 .vscode
 .envbak
-.env_bak
+.env*
 
