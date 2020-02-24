@@ -1,0 +1,3 @@
+User-agent: *
+Disallow: 
+Sitemap: https://www.h3blog.com/sitemap.xml

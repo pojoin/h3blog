@@ -1,4 +1,5 @@
-from flask import render_template, redirect, request, current_app, url_for, g
+from flask import render_template, redirect, request, current_app, \
+    url_for, g, send_from_directory
 from . import main
 from ..models import Article, Tag, Category, article_tag
 from .forms import SearchForm
@@ -154,3 +155,7 @@ def sitemap():
     for a in articles:
         #posts.post是文章视图的endpoint,后面是其参数
         yield 'main.article',{'name':a.name}
+
+@main.route('/robots.txt')
+def robots():
+    return send_from_directory(main.static_folder,'robots.txt')
