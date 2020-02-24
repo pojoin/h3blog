@@ -86,7 +86,7 @@ class Article(db.Model):
     thumbnail = db.Column(db.String(200))
     state = db.Column(db.Integer,default=0)
     vc = db.Column(db.Integer,default=0)
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.now())
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.now)
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
     tags = db.relationship('Tag',secondary=article_tag,backref=db.backref('articles',lazy='dynamic'),lazy='dynamic')
