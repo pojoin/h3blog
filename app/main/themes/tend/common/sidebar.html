@@ -3,7 +3,7 @@
     <div class="card-header bg-white px-0">
         <strong><i class="fa fa-paper-plane mr-2 f-17"></i>公众号</strong>
         <img class="float-right" id="theme-img"
-             src="{{url_for('main.static',filename='img/toggle-light.png')}}"
+             src="{{ url_for('main.static',filename='img/toggle-dark.png') if request.cookies.get('toggleTheme') == 'dark' else url_for('main.static',filename='img/toggle-light.png') }}"
              alt="theme-toggle" title="切换主题">
     </div>
     <div class="card-body px-0 pt-3 pb-1">

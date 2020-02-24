@@ -28,6 +28,10 @@
         <script src="{{url_for('main.static',filename='js/headroom.min.js')}}"></script>
         <!-- blog CSS -->
         <link href="{{url_for('main.static',filename='css/blog.css')}}" rel="stylesheet">
+        <!--根据cookies判断是否启用暗色主题-->
+        {% if request.cookies.get('toggleTheme') == "dark" %}
+        <link id="theme-css-dark" href="{{url_for('main.static',filename='css/night.css')}}" rel="stylesheet">
+        {% endif %}
         {% endblock %}
     </head>
 
