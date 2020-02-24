@@ -112,4 +112,6 @@ uploads/*
 !uploads/.gitkeep
 
 .vscode
+.envbak
+.env_bak
 
