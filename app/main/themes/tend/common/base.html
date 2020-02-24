@@ -66,15 +66,14 @@
             <!-- Custom scripts for this template -->
             <script src="{{url_for('main.static',filename='js/blog.js')}}"></script>
             <script type="text/javascript">
-                $("tex.tex-inline").each(
-                    function(i, domElem) {
-                        katex.render(domElem.innerText, domElem, {displayMode: false});
-                    });
-                $("tex.tex-block").each(
-                    function(i, domElem) {
-                        katex.render(domElem.innerText, domElem, {displayMode: true});
-                    });
-            </script>
+                var _hmt = _hmt || [];
+                (function() {
+                  var hm = document.createElement("script");
+                  hm.src = "https://hm.baidu.com/hm.js?1f02ec4e9d769ae54b147d0b288eea96";
+                  var s = document.getElementsByTagName("script")[0]; 
+                  s.parentNode.insertBefore(hm, s);
+                })();
+            </script>                
         {% endblock %}
     </body>
 </html>
