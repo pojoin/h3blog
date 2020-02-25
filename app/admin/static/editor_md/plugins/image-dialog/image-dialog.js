@@ -11,6 +11,7 @@
 
 (function() {
 
+
     var factory = function (exports) {
 
 		var pluginName   = "image-dialog";
@@ -51,8 +52,9 @@
                                         "<label>" + imageLang.url + "</label>" +
                                         "<input type=\"text\" data-url />" + (function(){
                                             return (settings.imageUpload) ? "<div class=\"" + classPrefix + "file-input\">" +
-                                                                                "<input type=\"file\" name=\"" + classPrefix + "image-file\" accept=\"image/*\" />" +
-                                                                                "<input type=\"submit\" value=\"" + imageLang.uploadButton + "\" />" +
+                                                                                // "<input type=\"file\" name=\"" + classPrefix + "image-file\" accept=\"image/*\" />" +
+                                                                                "<input class=\"select_img\" type=\"submit\" value=\"" + imageLang.uploadButton + "\" />" +
+                                                                                // "<input class=\"select_img\" type=\"button\" value=\"选择图片\" />" +
                                                                             "</div>" : "";
                                         })() +
                                         "<br/>" +
@@ -125,6 +127,14 @@
                     return ;
                 }
 
+                var select_btn = dialog.find('[class="select_img"]').bind('click',function(){
+                    settings.imagehosting_callback = function(obj) {
+                        dialog.find("[data-url]").val(obj.img_url);
+                    };
+                    settings.imagehosting('editor-img');
+                    
+                });
+
 				var fileInput  = dialog.find("[name=\"" + classPrefix + "image-file\"]");
 
 				fileInput.bind("change", function() {
@@ -176,7 +186,7 @@
                         };
                     };
 
-                    dialog.find("[type=\"submit\"]").bind("click", submitHandler).trigger("click");
+                    // dialog.find("[type=\"submit\"]").bind("click", submitHandler).trigger("click");
 				});
             }
 

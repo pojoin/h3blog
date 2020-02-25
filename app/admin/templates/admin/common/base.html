@@ -25,6 +25,7 @@
     </head>
 
     <body>
+        {% block body %}
         {% include 'admin/common/header.html' %}
         <div class="container-fluid">
             <div class="row">
@@ -34,6 +35,7 @@
                 </main><!--/main-->
             </div><!--/row-->
         </div><!--/.container-->
+        {% endblock %}
         <!--js合集-->
         {% block js %}
             <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -41,6 +43,7 @@
             <script src="{{ url_for('admin.static',filename='js/popper.min.js') }}"></script>
             <script src="{{ url_for('admin.static',filename='js/bootstrap.min.js') }}"></script>
             <script src="{{ url_for('admin.static',filename='js/toastr.min.js')}}"></script>
+            <script src="{{ url_for('admin.static',filename='layer/layer.js')}}"></script>
             <!-- 个性化 js 文件 -->
             <script src="{{ url_for('admin.static', filename='js/admin.js')}}"></script>
         {% endblock %}

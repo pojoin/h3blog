@@ -8,6 +8,36 @@
 {{ super() }}
 <script src="{{url_for('.static',filename='editor_md/editormd.min.js')}}"></script>
 <script>
+
+    var imagehosting_for = "thumbnail-img";
+    //图床
+    function imagehosting(flag) {
+        imagehosting_for = flag;
+        layer.open({
+            type: 2,
+            title: '图片管理',
+            shade: 0.8,
+            maxmin: true,
+            shadeClose: true,
+            area: ['80%', '90%'],
+            content: '{{url_for("admin.image_hosting")}}' //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+        });
+    }
+
+    function imagehosting_callback(obj) {
+        //缩略图
+        if(imagehosting_for === 'thumbnail-img') {
+            $('#thumbnail-img').attr('src', obj.img_url);
+            $('#thumbnail').val(obj.img_url);
+        }
+        //编辑器 editor.md
+        if(imagehosting_for === 'editor-img') {
+            console.log(myEditor)
+            myEditor.settings.imagehosting_callback(obj)
+        }
+
+    }
+
     var myEditor;
     $(function () {
         myEditor = editormd("write-editor", {
@@ -24,8 +54,8 @@
             //sequenceDiagram: true,//开启时序/序列图支持，默认关闭,
             //启动本地图片上传功能
             imageUpload: true,
-            imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
-            imageUploadURL: "{{url_for('.upload')}}",
+            // imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+            // imageUploadURL: "{{url_for('.upload')}}",
             toolbarIcons: function () {
                 // Or return editormd.toolbarModes[name]; // full, simple, mini
                 // Using "||" set icons align right.
@@ -37,10 +67,11 @@
                     "|", "list-ul", "list-ol", "hr", "|", "link", "reference-link", "image",
                     "code", "code-block", "table", "|", "watch", "fullscreen"]
             },
-            // 用于增加自定义工具栏的功能，可以直接插入HTML标签，不使用默认的元素创建图标
-            toolbarCustomIcons: {
-                publish: '<button id="publish" type="button" class="btn btn-primary btn-xs" ' +
-                    'data-toggle="modal" data-target="#myModal">发表文章</button>'
+            imagehosting: function () {
+                imagehosting('editor-img');
+            },
+            imagehosting_callback:function(obj) {
+                
             }
         });
 
@@ -89,30 +120,7 @@
 
         //上传图片
         $('#thumbnail-upload-btn').click(function (e) {
-            $("#img-file").trigger("click");
-        });
-
-        $("#img-file").change(function () {
-            var formdata = new FormData();
-            formdata.append('editormd-image-file', $("#img-file")[0].files[0]); //获取图片信息
-            $.ajax({
-                url: "{{url_for('admin.upload')}}",
-                type: 'post',
-                data: formdata,
-                cache: false,
-                dataType: 'json',
-                processData: false,
-                contentType: false,
-                success: function (res) {
-                    if (res.success === 1) {
-                        toastr.success(res.message)
-                        $('#thumbnail-img').attr('src', res.url);
-                        $('#thumbnail').val(res.url);
-                    } else {
-                        toastr.error(res.message)
-                    }
-                }
-            });
+            imagehosting('thumbnail-img');
         });
 
         //固定路径编辑
@@ -173,7 +181,6 @@
                     <div id="thumbnail-div" class="card mt-3">
                         <h6 class="card-title p-2 border-bottom">缩略图</h6>
                         <div class="card-body">
-                            <input type="file" hidden id="img-file" />
                             <img id="thumbnail-img"
                                 src="{{form.thumbnail.data if form.thumbnail.data else url_for('static',filename='img/thumbnail.jpg')}}"
                                 class="card-img-top" alt="缩略图">

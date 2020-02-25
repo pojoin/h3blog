@@ -61,6 +61,28 @@ def upload_file_qiniu(inputdata,filename=None):
 
     return ret1.get('key')
 
+def file_list_qiniu():
+    from qiniu import Auth, BucketManager
+    access_key = current_app.config.get('QINIU_ACCESS_KEY')
+    secret_key = current_app.config.get('QINIU_SECRET_KEY')
+    cdn = current_app.config.get('QINIU_CDN_URL')
+    q = Auth(access_key, secret_key)
+    bucket = BucketManager(q)
+    bucket_name = 'h3blog'
+    # 前缀
+    prefix = None
+    # 列举条目
+    limit = 100
+    # 列举出除'/'的所有文件以及以'/'为分隔的所有前缀
+    delimiter = None
+    # 标记
+    marker = None
+    ret, eof, info = bucket.list(bucket_name, prefix, marker, limit, delimiter)
+    # print(info)
+    # assert len(ret.get('items')) is not None
+    items = ret.get('items')
+    return [ {'key':item['key'],'url': cdn + item['key']} for item in items]
+
 def pretty_date(time=False):
     """
     Get a datetime object or a int() Epoch timestamp and return a

@@ -43,8 +43,9 @@ class BaseConfig(object):
     MAX_CONTENT_LENGTH = 32 * 1024 * 1024
 
     QINIU_CDN_URL = os.getenv('QINIU_CDN_URL','http://cdn.h3blog.com/')
-    QINIU_ACCESS_KEY = os.getenv('QINIU_ACCESS_KEY','LlO13INj1pl5Ow5WtoJF0FOcoFKpCbGRXEiPRSV9')
-    QINIU_SECRET_KEY = os.getenv('QINIU_SECRET_KEY','N2j2dgnvncu3DSUyM_-_4WerDJOKahefJTrJAkje')
+    QINIU_BUCKET_NAME = os.getenv('QINIU_BUCKET_NAME','h3blog')
+    QINIU_ACCESS_KEY = os.getenv('QINIU_ACCESS_KEY','key123')
+    QINIU_SECRET_KEY = os.getenv('QINIU_SECRET_KEY','secret456')
 
 
 class DevelopmentConfig(BaseConfig):

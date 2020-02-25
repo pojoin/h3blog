@@ -38,7 +38,7 @@ def hot():
         paginate(page,per_page=current_app.config['H3BLOG_POST_PER_PAGE'],error_out=False)
     return render_template('index.html',articles=articles)
 
-@main.route('/about', methods=['GET', 'POST'])
+@main.route('/about/', methods=['GET', 'POST'])
 def about():
     return render_template('about.html')
 

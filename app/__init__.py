@@ -2,7 +2,7 @@ import os
 import logging
 import click
 from logging.handlers import RotatingFileHandler
-from flask import Flask
+from flask import Flask, render_template
 from flask_sqlalchemy import get_debug_queries
 from flask_wtf.csrf import CSRFError
 from app.util import pretty_date

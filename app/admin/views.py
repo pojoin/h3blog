@@ -200,11 +200,11 @@ def password():
 @admin.route('/upload',methods=['POST'])
 def upload():
     """图片上传处理"""
-    file=request.files.get('editormd-image-file')
+    file=request.files.get('file')
     if not allowed_file(file.filename):
         res={
-            'success':0,
-            'message':'图片格式异常'
+            'code':0,
+            'msg':'图片格式异常'
         }
     else:
         url_path = ''
@@ -222,8 +222,8 @@ def upload():
                 return jsonify({'success':0,'message':'上传图片异常'})
         #返回
         res={
-            'success':1,
-            'message':u'图片上传成功',
+            'code':1,
+            'msg':u'图片上传成功',
             'url': url_path
         }
     return jsonify(res)
@@ -279,3 +279,12 @@ def categroy_edit(id):
 @admin.route('/uploads/<path:filename>')
 def get_image(filename):
     return send_from_directory(current_app.config['H3BLOG_UPLOAD_PATH'], filename)
+
+@admin.route('/imagehosting')
+def image_hosting():
+    """
+    图床
+    """
+    from app.util import file_list_qiniu
+    imgs = file_list_qiniu()
+    return render_template('admin/image_hosting.html',imgs = imgs)

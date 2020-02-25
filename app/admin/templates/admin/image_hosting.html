@@ -1,0 +1,98 @@
+{% extends 'admin/common/base.html' %}
+{% block css %}
+{{super()}}
+<style>
+    .selectCard {
+        border: 5px solid rgb(48, 4, 241);
+    }
+
+    .navbar img {
+        width: 80px;
+        height: 60px;
+    }
+</style>
+{% endblock %}
+{% block js %}
+{{super()}}
+<script>
+    var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+    //给父页面传值
+    $('#ok').on('click', function () {
+        var img_url = $('#selectImg').prop('src');
+        var img_name = $('#selectImg').prop('alt');
+        if (img_url.indexOf('...') > 0) {
+            toastr.error('请选择图片');
+            return;
+        }
+        var obj = {};
+        obj.img_url = img_url;
+        obj.img_name = img_name;
+        parent.imagehosting_callback(obj);
+        // parent.$('#parentIframe').text('我被改变了');
+        // parent.layer.tips('Look here', '#parentIframe', {time: 5000});
+        parent.layer.close(index);
+    });
+
+    var current_card = null;
+    $('.card').click(function (e) {
+        $('.card').removeClass('selectCard')
+        $(this).addClass('selectCard');
+        current_card = $(this)
+        var img_url = current_card.find('img').prop('src');
+        var img_name = current_card.find('h5').html();
+        $('#selectImg').prop('src', img_url).prop('alt', img_name);
+    });
+
+    //上传图片
+    $('#upload-btn').click(function (e) {
+        $("#img-file").trigger("click");
+    });
+
+    $("#img-file").change(function () {
+        var formdata = new FormData();
+        formdata.append('file', $("#img-file")[0].files[0]); //获取图片信息
+        $.ajax({
+            url: "{{url_for('admin.upload')}}",
+            type: 'post',
+            data: formdata,
+            cache: false,
+            dataType: 'json',
+            processData: false,
+            contentType: false,
+            success: function (res) {
+                if (res.code === 1) {
+                    toastr.success(res.msg)
+                    window.location.reload();
+                } else {
+                    toastr.error(res.msg)
+                }
+            }
+        });
+    });
+</script>
+{% endblock %}
+{% block body %}
+<div class="container mt-1">
+    <div class="row">
+        {% for img in imgs%}
+        <div class="card m-1" style="width: 15rem;">
+            <img src="{{img.url}}" class="card-img-top rounded" style="height: 13rem;" alt="{{img.key}}">
+            <div class="card-body">
+                <h5 class="card-title">{{img.key}}</h5>
+            </div>
+        </div>
+        <!--end card-->
+        {% endfor %}
+    </div>
+    <div class="m-3" style="height: 3rem;"></div>
+    <div class="row fixed-bottom bg-light navbar">
+        <input type="file" hidden id="img-file" accept="image/*"/>
+        <img id="selectImg" src="..." class="rounded float-left" alt="请选择图片">
+        <div>
+            <button id="upload-btn" class="btn btn-primary p-2">上传</button>
+            &nbsp;&nbsp;&nbsp;
+            <button id="ok" class="btn btn-primary p-2 m-2">确定</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
