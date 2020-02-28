@@ -74,7 +74,7 @@
             </h2>
             {% with c_html = a.content_to_html() %}
             <p class="d-none d-sm-block mb-2 f-15">{{c_html|striptags|truncate(120,killwords=True,leeway=0) }}</p>
-            <p class="d-block d-sm-none mb-2 f-15">{{c_html |truncate(64,killwords=True,leeway=0) }}</p>
+            <p class="d-block d-sm-none mb-2 f-15">{{c_html|striptags|truncate(64,killwords=True,leeway=0) }}</p>
             {% endwith %}
             <div class="text-muted mb-0 f-12">
                 <a class="cate" href="/category/{{a.category.name}}" title="查看当前分类下更多文章">
