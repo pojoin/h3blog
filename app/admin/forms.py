@@ -1,9 +1,10 @@
 from flask import url_for
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField,IntegerField,HiddenField, BooleanField, SubmitField, SelectField, TextAreaField
+from wtforms import StringField, PasswordField,IntegerField,HiddenField, BooleanField, SubmitField, SelectField, TextAreaField, DateTimeField
 from wtforms.validators import DataRequired, Length, Email, Regexp, EqualTo
 from wtforms import ValidationError
 from ..models import User, Category, Article
+from datetime import datetime
 
 
 class LoginForm(FlaskForm):
@@ -78,6 +79,7 @@ class ArticleForm(FlaskForm):
     state = HiddenField('状态',default=0)
     thumbnail = HiddenField('缩略图',default='/static/img/thumbnail.jpg')
     summary = HiddenField('概述')
+    timestamp = DateTimeField('发布时间',default=datetime.now())
     save = SubmitField('保存')
     
     def __init__(self,*args,**kwargs):

@@ -187,12 +187,16 @@
                             <div class="mt-2">
                                 <button id="thumbnail-upload-btn" type="button"
                                     class="btn btn-outline-secondary btn-sm">选择图片</button>
-                                <a href="#" class="ml-3">移除</a>
                             </div>
                         </div>
                     </div>
                     <!--thumbnail end-->
-
+                    <div id="publish-time" class="card mt-3">
+                        <h6 class="card-title p-2 border-bottom">发布时间</h6>
+                        <div class="card-body">
+                            {{form.timestamp(type='datetime',class='form-control')}}
+                        </div>
+                    </div><!--publish time end-->
                 </div>
             </div>
         </form>

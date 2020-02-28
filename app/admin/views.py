@@ -98,6 +98,7 @@ def write():
             a.category = cty
             a.name = form.name.data.strip()
             a.state = form.state.data
+            a.timestamp = form.timestamp.data
             if not a.name and len(a.name) == 0 :
                 a.name = a.id
             db.session.commit()
