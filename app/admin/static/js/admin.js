@@ -39,3 +39,25 @@ $(document).ready(function () {
     };
 
 });
+
+//将将链接推送给百度接口
+//api 调用后台地址接口
+//urls 需要推送的url，多个需要使用\n进行分割
+function baidu_push_article(api,url) {
+    url = window.location.protocol + '//' + window.location.host + url;
+    console.log(api,url)
+
+    $.ajax({
+        type: 'POST',
+        url: api,
+        data: 'urls='+url,
+        success: function(res){
+            if(res.success > 0) {
+                toastr.success('成功推送' + res.success + '个','剩余调用次数' + res.remain);
+            }else {
+                toastr.error('推送失败','非本站链接或链接不合法')
+            }
+            console.log(res)
+        }
+    });
+}

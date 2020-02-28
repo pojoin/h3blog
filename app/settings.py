@@ -30,6 +30,7 @@ class BaseConfig(object):
     MAIL_PASSWORD = os.getenv('MAIL_PASSWORD')
     MAIL_DEFAULT_SENDER = ('H3BLOG Admin', MAIL_USERNAME)
 
+    H3BLOG_DOMAIN = os.getenv('H3BLOG_DOMAIN','www.h3blog.com')
     H3BLOG_EMAIL = os.getenv('H3BLOG_EMAIL')
     H3BLOG_POST_PER_PAGE = 10
     H3BLOG_MANAGE_POST_PER_PAGE = 15
@@ -46,6 +47,8 @@ class BaseConfig(object):
     QINIU_BUCKET_NAME = os.getenv('QINIU_BUCKET_NAME','h3blog')
     QINIU_ACCESS_KEY = os.getenv('QINIU_ACCESS_KEY','key123')
     QINIU_SECRET_KEY = os.getenv('QINIU_SECRET_KEY','secret456')
+
+    BAIDU_PUSH_TOKEN = os.getenv('BAIDU_PUSH_TOKEN') #主动推送给百度链接，token是在搜索资源平台申请的推送用的准入密钥
 
 
 class DevelopmentConfig(BaseConfig):

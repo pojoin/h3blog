@@ -2,6 +2,9 @@ from flask import request,current_app
 from flask import abort
 from flask_login import current_user
 from functools import wraps
+import requests
+import json
+import logging
 
 def admin_required(func):
     """ 检查管理员权限 """
@@ -129,3 +132,18 @@ def pretty_date(time=False):
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in current_app.config['H3BLOG_ALLOWED_IMAGE_EXTENSIONS']
+
+
+def baidu_push_urls(domain,urls):
+    """
+    主动推送给百度
+    """
+    headers = {'Content-Type':'text/plain'}
+    url = 'http://data.zz.baidu.com/urls?site={}&token={}'. \
+        format(domain,current_app.config.get('BAIDU_PUSH_TOKEN'))
+    try:
+        ret = requests.post(url, headers = headers, data = urls, timeout = 3).text
+        return json.loads(ret)
+    except Exception as e :
+        logging.error(e)
+        return {'success':0,'msg':'超时错误'}

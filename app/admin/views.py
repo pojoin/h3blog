@@ -7,7 +7,8 @@ from .forms import AddAdminForm, LoginForm, AddUserForm, DeleteUserForm, EditUse
 from ..models import User, Category, Tag, Article
 import os
 from datetime import datetime
-from app.util import admin_required, author_required, isAjax, upload_file_qiniu, allowed_file
+from app.util import admin_required, author_required, isAjax, upload_file_qiniu, allowed_file, \
+    baidu_push_urls
 
 
 @admin.route('/', methods=['GET', 'POST'])
@@ -288,3 +289,10 @@ def image_hosting():
     from app.util import file_list_qiniu
     imgs = file_list_qiniu()
     return render_template('admin/image_hosting.html',imgs = imgs)
+
+@admin.route('/baidu_push_urls',methods=['POST'])
+def baidu_push_article():
+    urls = request.form.get('urls')
+    domain = current_app.config.get('H3BLOG_DOMAIN','https://www.h3blog.com')
+    ret = baidu_push_urls(domain,urls)
+    return jsonify(ret)
