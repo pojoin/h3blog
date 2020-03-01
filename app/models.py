@@ -82,7 +82,8 @@ class Article(db.Model):
     title = db.Column(db.String(64), index=True)
     name = db.Column(db.String(64),index=True,unique=True)
     content = db.Column(db.Text)
-    summary = db.Column(db.Text)
+    content_html = db.Column(db.Text)
+    summary = db.Column(db.String(300))
     thumbnail = db.Column(db.String(200))
     state = db.Column(db.Integer,default=0)
     vc = db.Column(db.Integer,default=0)
@@ -92,7 +93,7 @@ class Article(db.Model):
     tags = db.relationship('Tag',secondary=article_tag,backref=db.backref('articles',lazy='dynamic'),lazy='dynamic')
 
     def content_to_html(self):
-       return markdown.markdown(self.content, extensions=[
+        return markdown.markdown(self.content, extensions=[
             'markdown.extensions.extra',
             'markdown.extensions.codehilite',
             ])

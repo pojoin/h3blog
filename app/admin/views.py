@@ -8,7 +8,7 @@ from ..models import User, Category, Tag, Article
 import os
 from datetime import datetime
 from app.util import admin_required, author_required, isAjax, upload_file_qiniu, allowed_file, \
-    baidu_push_urls
+    baidu_push_urls, strip_tags
 
 
 @admin.route('/', methods=['GET', 'POST'])
@@ -93,6 +93,7 @@ def write():
         if a :
             a.title = form.title.data.strip()
             a.content = form.content.data
+            a.content_html = a.content_to_html()
             a.summary = form.summary.data
             a.thumbnail = form.thumbnail.data
             a.category = cty
@@ -108,6 +109,7 @@ def write():
                         thumbnail = form.thumbnail.data,name = form.name.data.strip(),
                         state = form.state.data,summary = form.summary.data,
                         category=cty, author=current_user._get_current_object())
+            a.content_html = a.content_to_html()
             db.session.add(a)
             db.session.commit()
             if not a.name and len(a.name) == 0 :

@@ -6,7 +6,7 @@ from flask import Flask, render_template
 from flask_sqlalchemy import get_debug_queries
 from flask_wtf.csrf import CSRFError
 from app.util import pretty_date
-from app.extensions import db, sitemap, login_manager
+from app.extensions import db, sitemap, login_manager, migrate
 from app.settings import config
 
 basedir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
@@ -59,6 +59,8 @@ def register_extensions(app):
     db.init_app(app)
     login_manager.init_app(app)
     sitemap.init_app(app)
+    migrate.init_app(app,db=db)
+
     
 
 

@@ -5,6 +5,7 @@ from functools import wraps
 import requests
 import json
 import logging
+import re
 
 def admin_required(func):
     """ 检查管理员权限 """
@@ -147,3 +148,33 @@ def baidu_push_urls(domain,urls):
     except Exception as e :
         logging.error(e)
         return {'success':0,'msg':'超时错误'}
+
+def strip_tags(string, allowed_tags=''):
+    """
+    去除html标签
+    """
+    if allowed_tags != '':
+        # Get a list of all allowed tag names.
+        allowed_tags = allowed_tags.split(',')
+        allowed_tags_pattern = ['</?'+allowed_tag+'[^>]*>' for allowed_tag in allowed_tags]
+        all_tags = re.findall(r'<[^>]+>', string, re.I)
+        not_allowed_tags = []
+        tmp = 0
+        for tag in all_tags:
+            for pattern in allowed_tags_pattern:
+                rs = re.match(pattern,tag)
+                if rs:
+                    tmp += 1
+                else:
+                    tmp += 0
+            if not tmp:
+                not_allowed_tags.append(tag)
+            tmp = 0
+        for not_allowed_tag in not_allowed_tags:
+            string = re.sub(re.escape(not_allowed_tag), '',string)
+        print(not_allowed_tags)
+    else:
+        # If no allowed tags, remove all.
+        string = re.sub(r'<[^>]*?>', '', string)
+  
+    return string

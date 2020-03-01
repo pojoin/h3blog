@@ -112,6 +112,7 @@ uploads/*
 !uploads/.gitkeep
 
 .vscode
-.envbak
 .env*
+.migrations/
+
 
