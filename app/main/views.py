@@ -149,9 +149,14 @@ def sitemap():
     yield 'main.about',{},now.strftime('%Y-%m-%dT%H:%M:%S'),'always',0.5
     for category in categories:
         yield 'main.category',{'c':category.name},now.strftime('%Y-%m-%dT%H:%M:%S'),'always',0.9
+    for categories in categories:
+        yield 'main.category_hot',{'c':category.name},now.strftime('%Y-%m-%dT%H:%M:%S'),'always',0.9
 
     for t in tags:
         yield 'main.tag',{'t':t.name},now.strftime('%Y-%m-%dT%H:%M:%S'),'always',0.9
+    for t in tags:
+        yield 'main.tag_hot',{'t':t.name},now.strftime('%Y-%m-%dT%H:%M:%S'),'always',0.9
+
     for a in articles:
         #posts.post是文章视图的endpoint,后面是其参数
         yield 'main.article',{'name':a.name}
