@@ -113,6 +113,6 @@ uploads/*
 
 .vscode
 .env*
-.migrations/
+migrations/
 
 
