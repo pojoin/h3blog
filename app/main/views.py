@@ -141,18 +141,23 @@ def sitemap():
     tags = Tag.query.all()
     import datetime
     now = datetime.datetime.now()
+    #首页
     yield 'main.index',{},now.strftime('%Y-%m-%dT%H:%M:%S'),'always',1.0
+    #关于我
     yield 'main.about',{},now.strftime('%Y-%m-%dT%H:%M:%S'),'always',0.5
+    #分类
     for category in categories:
         yield 'main.category',{'c':category.name},now.strftime('%Y-%m-%dT%H:%M:%S'),'always',0.9
     for categories in categories:
         yield 'main.category_hot',{'c':category.name},now.strftime('%Y-%m-%dT%H:%M:%S'),'always',0.9
-
+    #标签
+    yield 'main.tags',{},now.strftime('%Y-%m-%dT%H:%M:%S'),'always',0.9
     for t in tags:
         yield 'main.tag',{'t':t.name},now.strftime('%Y-%m-%dT%H:%M:%S'),'always',0.9
     for t in tags:
         yield 'main.tag_hot',{'t':t.name},now.strftime('%Y-%m-%dT%H:%M:%S'),'always',0.9
 
+    #文章
     for a in articles:
         #posts.post是文章视图的endpoint,后面是其参数
         yield 'main.article',{'name':a.name}
