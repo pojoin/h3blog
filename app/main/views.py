@@ -136,7 +136,7 @@ def sitemap():
     """
     sitemap生成
     """
-    articles = Article.query.all()
+    articles = Article.query.filter(Article.state == 1).all()
     categories = Category.query.all()
     tags = Tag.query.all()
     import datetime
