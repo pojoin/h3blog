@@ -50,6 +50,11 @@ def article(name):
     db.session.commit()
     return render_template('article.html', article=article)
 
+@main.route('/tags/')
+def tags():
+    tags = Tag.query.all()
+    return render_template('tags.html',tags = tags)
+
 
 @main.route('/tag/<t>/', methods=['GET'])
 def tag(t):
@@ -58,15 +63,6 @@ def tag(t):
     articles = tag.articles.filter(Article.state == 1).\
         order_by(Article.timestamp.desc()). \
         paginate(page, per_page=current_app.config['H3BLOG_POST_PER_PAGE'], error_out=False)
-    # articles = Article.query.join(article_tag,tag_id==tag.id). \
-    #     filter(article_tag.article_id==Article.id,Article.state == 1). \
-    #     order_by(Article.timestamp.desc).\
-    #     paginate(page, per_page=current_app.config['H3BLOG_POST_PER_PAGE'], error_out=False)
-    
-    # articles = Article.query.join(TagSpaces, TagSpaces.tag_id == tag.id).filter(TagSpaces.article_id == Article.id,Article.state == 1 ). \
-    #     order_by(Article.timestamp.desc()). \
-    #     paginate(page, per_page=current_app.config['H3BLOG_POST_PER_PAGE'], error_out=False)
-
     return render_template('tag.html', articles=articles, tag=tag,orderby='time')
 
 @main.route('/tag/<t>/hot/', methods=['GET'])
