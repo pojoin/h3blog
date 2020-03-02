@@ -1,19 +1,83 @@
 {% extends 'common/base.html' %}
 {% import "macros/_patination.html" as page_macros %}
+{% block css %}
+{{ super() }}
+<link href="{{ url_for('main.static', filename='css/detail.css') }}" rel="stylesheet">
+<link href="{{ url_for('main.static', filename='css/monokai.css') }}" rel="stylesheet">
+<link href="{{ url_for('main.static', filename='css/base_comment.css') }}" rel="stylesheet">
+{% endblock %}
 {% block title %}
 关于本站-{{ super() }}
 {% endblock %}
 {% block content %}
-<div class="card rounded-0 border-0 p-3 f-16">
-<h2>关于本站</h2>
-<hr>
-<p>
-    作为一名技术人员，比较诚恳的来说，python不是我的首先语言，
-    但从我接触python开始，我发现真的是：<strong>人生苦短，我用python！</strong>
-    <br>
-    本站主要用来记录以博主以python为核心的心路历程，本站也是使用python语言开发的，
-    但不是从零开发的，初期是使用网络开源项目拼凑而成，优化网站的过程中，我也会把网站源码开发
-    出来，使用开源，也贡献开源。
-</p>
+
+<div class="card rounded-0 border-0" id="article">
+    <div class="card-body px-2 px-md-3 pb-0">
+        <h1 class="card-title text-center font-weight-bold text-info">关于本站</h1>
+        <hr>
+        <div class="text-center f-13">
+            <span class="mx-2" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="最后编辑于2020年03月02日">2020年03月02日 09:04</span>
+            <span class="mx-2">阅读 8</span>
+            <!-- <a class="mx-2 to-com" href="#comment-block">评论 1</a> -->
+        </div>
+        <div class="article-body mt-4 f-17" style="line-height:1.8">
+            <p><img alt="废柴python" src="http://cdn.h3blog.com/feichai.jpg" title="废柴python"></p>
+<p>作为一名技术人员中的废柴，比较诚恳的来说，<code>python</code>不是我的首先语言， 但从我接触python开始，我发现真的是：<strong><code>人生苦短，我用python！</code></strong></p>
+<p>本站主要用来记录本人以python为核心的心路历程，本站也是使用python语言开发的， 但不是从零开发的，初期是使用网络开源项目拼凑而成，优化网站的过程中，我也会把网站源码开发 出来，使用开源，也贡献开源。</p>
+<p>本站采用纯flask开发的个人博客系统 , 由于代码目前还比较混乱，代码暂未公开，如果您有需要可加我个人微信，留言<code>flask博客源码</code>即可，随后我会将本站源代码打包发送给你
+<img alt="何三" src="http://cdn.h3blog.com/wechat-me.jpg" title="何三"></p>
+        </div>
+        <blockquote class="p-1 f-14 mt-3" style="border-left: 4px solid #dc3545;">
+            <p class="m-1"><strong>版权声明：</strong>如无特殊说明，文章均为本站原创，转载请注明出处</p>
+            <p class="m-1"><strong>本文链接：</strong>https://www.h3blog.com/about/</p>
+        </blockquote>
+        <div class="tag-cloud my-4">
+            
+        </div>
+        <nav class="more-page f-16">
+            <ul class="pagination justify-content-between">
+                <li class="page-item">
+                    
+                    
+                    <a class="d-none d-md-block" href="/article/flask-jinja2-vars/" title="上一篇：flask jinja2 模板中如何定义临时变量">
+                        <i class="fa fa-chevron-left mr-1"></i>
+                        flask jinja2 模板中如何定义临时变量
+                    </a>
+                    <a class="d-md-none" href="/article/flask-jinja2-vars/">
+                        <i class="fa fa-chevron-left mr-1"></i>上一篇</a>
+                    
+                    
+                </li>
+                <li class="page-item">
+                    
+                    
+                    
+                </li>
+            </ul>
+        </nav>
+
+        <div class="text-center">
+            <button class="btn btn-danger rounded-0" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="sponsor-zfb sponsor-wx" style="line-height: 1;font-size: .8rem;">
+                <i class="fa fa-cny"></i>
+                如果文章对你有所帮助，可以赞助本站
+                <i class="fa fa-chevron-down"></i>
+            </button>
+        </div>
+        <div class="row p-3">
+            <div class="col text-center">
+                <div class="collapse multi-collapse" id="sponsor-wx">
+                    <div class="p-1 text-success">微信</div>
+                    <img class="w-75" src="http://cdn.h3blog.com/wechat-qr-code.png" alt="微信赞助码">
+                </div>
+            </div>
+            <div class="col text-center">
+                <div class="collapse multi-collapse" id="sponsor-zfb">
+                    <div class="p-1 text-primary">支付宝</div>
+                    <img class="w-75" src="http://cdn.h3blog.com/alipay-qr-code.png" alt="支付宝赞助码">
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
 {% endblock %}
