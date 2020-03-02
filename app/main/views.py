@@ -1,5 +1,5 @@
 from flask import render_template, redirect, request, current_app, \
-    url_for, g, send_from_directory
+    url_for, g, send_from_directory, abort
 from . import main
 from ..models import Article, Tag, Category, article_tag
 from .forms import SearchForm
@@ -13,12 +13,6 @@ def before_request():
     g.tags = Tag.query.all()
     g.categorys = Category.query.all()
     g.recent_articles = Article.query.filter_by(state=1).order_by(Article.timestamp.desc()).limit(5).all()
-    # articles = Article.query.order_by(Article.timestamp.desc()).all()
-    # time_tag = []
-    # for a in articles:
-    #     if a.timestamp.strftime('%Y-%m') not in time_tag:
-    #         time_tag.append(a.timestamp.strftime('%Y-%m'))
-    # g.time_tag = time_tag
     g.search_form = SearchForm(prefix='search')
 
 
@@ -40,12 +34,18 @@ def hot():
 
 @main.route('/about/', methods=['GET', 'POST'])
 def about():
+    article = Article.query.filter(Article.name=='about-me').first()
+    if article :
+        article.vc = article.vc + 1
+        return render_template('article.html', article=article)
     return render_template('about.html')
 
 
 @main.route('/article/<name>/', methods=['GET', 'POST'])
 def article(name):
     article = Article.query.filter_by(name=name).first()
+    if article is None:
+        abort(404)
     article.vc = article.vc + 1
     db.session.commit()
     return render_template('article.html', article=article)
