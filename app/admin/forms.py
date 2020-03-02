@@ -79,7 +79,7 @@ class ArticleForm(FlaskForm):
     state = HiddenField('状态',default=0)
     thumbnail = HiddenField('缩略图',default='/static/img/thumbnail.jpg')
     summary = HiddenField('概述')
-    timestamp = DateTimeField('发布时间',default=datetime.now())
+    timestamp = DateTimeField('发布时间',default=datetime.now)
     save = SubmitField('保存')
     
     def __init__(self,*args,**kwargs):
