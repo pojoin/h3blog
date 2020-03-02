@@ -24,6 +24,11 @@ def index():
         paginate(page, per_page=current_app.config['H3BLOG_POST_PER_PAGE'], error_out=False)
 
     return render_template('index.html', articles=articles)
+
+@main.route('/favicon.ico')
+def favicon():
+    return main.send_static_file('img/favicon.ico')
+
 @main.route('/hot/',methods=['GET'])
 def hot():
     page = request.args.get('page',1,type=int)
