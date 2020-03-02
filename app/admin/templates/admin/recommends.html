@@ -1,0 +1,40 @@
+{% extends 'admin/common/base.html' %}
+{% import "admin/macros/_patination.html" as page_macros %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div>
+        <h3>推荐列表</h3> <a href="{{url_for('admin.recommends_add')}}">添加</a>
+        </div>
+        <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">标题</th>
+                <th scope="col">链接</th>
+                <th scope="col">图片</th>
+                <th scope="col">排序</th>
+                <th scope="col">状态</th>
+                <th scope="col">操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for r in recommends.items %}
+              <tr>
+                <th scope="row">{{r.title}}</th>
+                <td>{{ r.url }}</td>
+                <td>{{r.img}}</td>
+                <td>{{r.sn}}</td>
+                <td>{{r.state}}</td>
+                <td>
+                    <a href="{{url_for('admin.recommends_edit',id=r.id)}}"
+                    class="btn btn-outline-primary btn-sm">修改</a>
+                </td>
+                    
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+    </div>
+    {{ page_macros.pagination_widget(recommends, 'admin.recommends') }}
+</div>
+{% endblock %}

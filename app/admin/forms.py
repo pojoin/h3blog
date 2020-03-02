@@ -106,6 +106,15 @@ class CategoryForm(FlaskForm):
     submit = SubmitField('提交')
 
 
+class RecommendForm(FlaskForm):
+    id = HiddenField('id')
+    title = StringField('标题',validators=[DataRequired()])
+    url = StringField('链接',validators=[DataRequired()],default='#')
+    sn = IntegerField('排序',default=0)
+    img = StringField('图片',validators=[DataRequired()])
+    state = SelectField('状态', choices=[('1', '正常'), ('0', '停止') ])
+    submit = SubmitField('提交')
+
 
 
 class BaidutongjiForm(FlaskForm):

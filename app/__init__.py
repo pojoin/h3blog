@@ -76,8 +76,8 @@ def register_blueprints(app):
 def register_shell_context(app):
     @app.shell_context_processor
     def make_shell_context():
-        from app.models import User, Article, Category, Tag, article_tag
-        return dict(db=db, User=User, Article=Article, Category=Category, Tag=Tag)
+        from app.models import User, Article, Category, Tag, article_tag, Recommend
+        return dict(db=db, User=User, Article=Article, Category=Category, Tag=Tag, Recommend = Recommend)
 
 
 def register_errors(app):

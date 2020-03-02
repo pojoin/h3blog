@@ -2,38 +2,22 @@
 {% import "macros/_patination.html" as page_macros %}
 {% block content %}
 <!--轮播图开始-->
+{% if recommends | length > 0 %}
 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
-        <li data-target="#carouselExampleIndicators" data-slide-to="0" class=""></li>
-        <li data-target="#carouselExampleIndicators" data-slide-to="1" class="active"></li>
-        <li data-target="#carouselExampleIndicators" data-slide-to="2" class=""></li>
-        <li data-target="#carouselExampleIndicators" data-slide-to="3" class=""></li>
+        {% for r in recommends %}
+        <li data-target="#carouselExampleIndicators" data-slide-to="{{loop.index}}" class="{{'active' if loop.first else ''}}"></li>
+        {% endfor %}
     </ol>
     <div class="carousel-inner">
-        <div class="carousel-item">
-            <a href="#">
-                <img class="w-100" src="https://tendcode.com/cdn/article/190122/izone-docker.jpg"
-                    alt="容器化部署博客（3）—— 5分钟完成项目迁移">
+        {% for r in recommends %}
+        <div class="carousel-item {{'active' if loop.first else ''}}">
+            <a href="{{r.url}}">
+                <img class="w-100" style="" src="{{r.img}}"
+                    alt="{{r.title}}">
             </a>
         </div>
-        <div class="carousel-item active">
-            <a href="#">
-                <img class="w-100" src="https://tendcode.com/cdn/article/180418/bsblog.png"
-                    alt="在 Linux 服务器上使用 Nginx + Gunicorn 部署 Django 项目的正确姿势">
-            </a>
-        </div>
-        <div class="carousel-item">
-            <a href="#">
-                <img class="w-100" src="https://tendcode.com/cdn/article/080414/virtualenv.png"
-                    alt="Python虚拟环境Virtualenv分别在Windows和Linux上的安装和使用">
-            </a>
-        </div>
-        <div class="carousel-item">
-            <a href="#">
-                <img class="w-100" src="https://tendcode.com/cdn/article/180415/jiandan.png" alt="煎蛋网妹子图爬虫">
-            </a>
-        </div>
-
+        {% endfor %}
     </div>
     <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -44,6 +28,7 @@
         <span class="sr-only">Next</span>
     </a>
 </div>
+{% endif %}
 <!--轮播图结束-->
 <!--排序方式-->
 <div class="text-secondary font-weight-bold py-2 f-15 choice">

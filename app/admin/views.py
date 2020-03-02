@@ -3,8 +3,8 @@ from flask_login import login_user, logout_user, login_required, current_user
 from . import admin
 from app.extensions import db
 from .forms import AddAdminForm, LoginForm, AddUserForm, DeleteUserForm, EditUserForm, ArticleForm, \
-        ChangePasswordForm, AddFolderForm, CategoryForm
-from ..models import User, Category, Tag, Article
+        ChangePasswordForm, AddFolderForm, CategoryForm, RecommendForm
+from app.models import User, Category, Tag, Article, Recommend
 import os
 from datetime import datetime
 from app.util import admin_required, author_required, isAjax, upload_file_qiniu, allowed_file, \
@@ -299,3 +299,53 @@ def baidu_push_article():
     domain = current_app.config.get('H3BLOG_DOMAIN','https://www.h3blog.com')
     ret = baidu_push_urls(domain,urls)
     return jsonify(ret)
+
+@admin.route('/recommends',methods=['GET'])
+@login_required
+def recommends():
+    '''
+    推荐列表
+    '''
+    page = request.args.get('page',1, type=int)
+    recommends = Recommend.query.order_by(Recommend.sn.desc()). \
+        paginate(page, per_page=current_app.config['H3BLOG_POST_PER_PAGE'], error_out=False)
+    return render_template('admin/recommends.html',recommends = recommends)
+
+@admin.route('/recommends/add',methods=['GET','POST'])
+@login_required
+def recommends_add():
+    '''
+    添加推荐
+    '''
+    form = RecommendForm()
+    if form.validate_on_submit():
+        r = Recommend(title=form.title.data.strip(),
+                url=form.url.data,
+                img = form.img.data,
+                sn = form.sn.data,
+                state = form.state.data)
+        db.session.add(r)
+        db.session.commit()  
+        return redirect(url_for('admin.recommends'))
+
+    return render_template('admin/recommend.html',form=form)
+
+@admin.route('/recommends/edit/<id>',methods=['GET','POST'])
+@login_required
+def recommends_edit(id):
+    """
+    修改推荐
+    """
+    r = Recommend.query.get(id)
+    form = RecommendForm()
+    if form.validate_on_submit():
+        r.title = form.title.data.strip()
+        r.url = form.url.data
+        r.img = form.img.data
+        r.sn = form.sn.data
+        r.state = form.state.data
+        db.session.commit()
+        return redirect(url_for('admin.recommends'))
+
+    form = RecommendForm(obj=r)
+    return render_template('admin/recommend.html',form=form)

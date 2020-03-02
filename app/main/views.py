@@ -1,7 +1,7 @@
 from flask import render_template, redirect, request, current_app, \
     url_for, g, send_from_directory, abort
 from . import main
-from ..models import Article, Tag, Category, article_tag
+from ..models import Article, Tag, Category, article_tag, Recommend
 from .forms import SearchForm
 from ..import db, sitemap
 
@@ -23,7 +23,8 @@ def index():
         order_by(Article.timestamp.desc()). \
         paginate(page, per_page=current_app.config['H3BLOG_POST_PER_PAGE'], error_out=False)
 
-    return render_template('index.html', articles=articles)
+    recommends = Recommend.query.filter(Recommend.state == 1).order_by(Recommend.sn.desc()).all()
+    return render_template('index.html', articles=articles, recommends = recommends)
 
 @main.route('/favicon.ico')
 def favicon():

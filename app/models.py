@@ -79,7 +79,7 @@ class Tag(db.Model):
 class Article(db.Model):
     __tablename__ = 'article'
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(64), index=True)
+    title = db.Column(db.String(120), index=True)
     name = db.Column(db.String(64),index=True,unique=True)
     content = db.Column(db.Text)
     content_html = db.Column(db.Text)
@@ -141,3 +141,17 @@ class Article(db.Model):
 
     def __repr__(self):
         return '<Title %r>' % self.title
+
+
+class Recommend(db.Model):
+    '''
+    推荐
+    '''
+    __tablename__ = 'recommend'
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(120))
+    img = db.Column(db.String(200))
+    url = db.Column(db.String(200))
+    sn = db.Column(db.Integer,default=0)
+    state = db.Column(db.Integer, default=1)
+    timestamp = db.Column(db.DateTime, default=datetime.now)

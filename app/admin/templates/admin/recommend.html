@@ -1,0 +1,43 @@
+{% extends 'admin/common/base.html' %}
+{% block content %}
+<form method="POST">
+    {{ form.hidden_tag() }}
+    <div class="form-group row">
+        <label for="title" class="col-sm-2 col-form-label">标题:</label>
+        <div class="col-sm-10">
+            {{form.title(id='title',class="form-control")}}
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="url" class="col-sm-2 col-form-label">链接:</label>
+        <div class="col-sm-10">
+            {{form.url(id='url',class='form-control')}}
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="sn" class="col-sm-2 col-form-label">排序:</label>
+        <div class="col-sm-10">
+            {{form.sn(id='sn',class='form-control')}}
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="img" class="col-sm-2 col-form-label">图片:</label>
+        <div class="col-sm-10">
+            {{form.img(id='sn',class='form-control')}}
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="state" class="col-sm-2 col-form-label">状态:</label>
+        <div class="col-sm-10">
+            {{form.state(id='state',class='form-control')}}
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-10">
+            {{form.submit(class='btn btn-primary')}}
+        </div>
+    </div>
+</form>
+{% endblock %}
