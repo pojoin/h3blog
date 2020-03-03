@@ -6,15 +6,18 @@
 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
         {% for r in recommends %}
-        <li data-target="#carouselExampleIndicators" data-slide-to="{{loop.index}}" class="{{'active' if loop.first else ''}}"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="{{loop.index}}"
+            class="{{'active' if loop.first else ''}}"></li>
         {% endfor %}
     </ol>
     <div class="carousel-inner">
         {% for r in recommends %}
         <div class="carousel-item {{'active' if loop.first else ''}}">
             <a href="{{r.url}}">
-                <img class="w-100" style="" src="{{r.img}}"
-                    alt="{{r.title}}">
+                <img class="d-block w-100" src="{{r.img}}" alt="{{r.title}}">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>{{r.title}}</h5>
+                </div>
             </a>
         </div>
         {% endfor %}
@@ -49,21 +52,22 @@
         </div>
         <div class="media-body">
             <div class="text-muted mb-2 f-12">
-                <img class="avatar" src="{{url_for('.static',filename='img/avatar.jpg')}}"
-                    alt="何三">
+                <img class="avatar" src="{{url_for('.static',filename='img/avatar.jpg')}}" alt="何三">
                 <span>何三</span>
                 <span><i class="fa fa-calendar-times-o ml-2 mr-1"></i>{{a.timestamp|pretty_date}}</span>
             </div>
             <h2 class="mt-0 font-weight-bold text-info f-17">
                 <a href="{{url_for('main.article',name=a.name)}}" target="_blank">{{a.title}}</a>
             </h2>
-            <p class="d-none d-sm-block mb-2 f-15">{{a.content_html|striptags|truncate(120,killwords=True,leeway=0) }}</p>
-            <p class="d-block d-sm-none mb-2 f-15">{{a.content_html|striptags|truncate(64,killwords=True,leeway=0) }}</p>
+            <p class="d-none d-sm-block mb-2 f-15">{{a.content_html|striptags|truncate(120,killwords=True,leeway=0) }}
+            </p>
+            <p class="d-block d-sm-none mb-2 f-15">{{a.content_html|striptags|truncate(64,killwords=True,leeway=0) }}
+            </p>
             <div class="text-muted mb-0 f-12">
                 <a class="cate" href="/category/{{a.category.name}}" title="查看当前分类下更多文章">
                     <i class="fa fa-book mr-1"></i>{{a.category.title}}</a>
                 <span><i class="fa fa-eye ml-2 mr-1"></i>{{a.vc}}</span>
-                
+
                 <!-- <a href="/article/abc/#comment-block" target="_blank" title="查看文章评论">
                     <i class="fa fa-comments ml-2 mr-1"></i>17</a> -->
             </div>
