@@ -36,7 +36,8 @@ def hot():
     articles = Article.query.filter_by(state=1). \
         order_by(Article.vc.desc()). \
         paginate(page,per_page=current_app.config['H3BLOG_POST_PER_PAGE'],error_out=False)
-    return render_template('index.html',articles=articles)
+    recommends = Recommend.query.filter(Recommend.state == 1).order_by(Recommend.sn.desc()).all()
+    return render_template('index.html',articles=articles, recommends = recommends)
 
 @main.route('/about/', methods=['GET', 'POST'])
 def about():
