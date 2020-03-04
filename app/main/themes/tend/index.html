@@ -62,9 +62,9 @@
             <h2 class="mt-0 font-weight-bold text-info f-17">
                 <a href="{{url_for('main.article',name=a.name)}}" target="_blank">{{a.title}}</a>
             </h2>
-            <p class="d-none d-sm-block mb-2 f-15">{{a.content_html|striptags|truncate(120,killwords=True,leeway=0) }}
+            <p class="d-none d-sm-block mb-2 f-15">{{a.summary|truncate(120,killwords=True,leeway=0) }}
             </p>
-            <p class="d-block d-sm-none mb-2 f-15">{{a.content_html|striptags|truncate(64,killwords=True,leeway=0) }}
+            <p class="d-block d-sm-none mb-2 f-15">{{a.summary|truncate(64,killwords=True,leeway=0) }}
             </p>
             <div class="text-muted mb-0 f-12">
                 <a class="cate" href="/category/{{a.category.name}}" title="查看当前分类下更多文章">
