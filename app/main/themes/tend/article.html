@@ -6,7 +6,7 @@
 <link href="{{ url_for('main.static', filename='css/base_comment.css') }}" rel="stylesheet">
 {% endblock %}
 {% block title %}
-{{ super() }}-{{ article.title }}
+{{ article.title }}-{{ super() }}
 {% endblock %}
 {% block content %}
 <div class="col">
