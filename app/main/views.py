@@ -172,3 +172,7 @@ def sitemap():
 @main.route('/robots.txt')
 def robots():
     return send_from_directory(main.static_folder,'robots.txt')
+
+@main.route('/tool/')
+def tool():
+    return render_template('tool.html')
