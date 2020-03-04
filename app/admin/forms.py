@@ -78,7 +78,7 @@ class ArticleForm(FlaskForm):
     tags = StringField('标签')
     state = HiddenField('状态',default=0)
     thumbnail = HiddenField('缩略图',default='/static/img/thumbnail.jpg')
-    summary = HiddenField('概述')
+    summary = TextAreaField('概述',validators=[DataRequired()])
     timestamp = DateTimeField('发布时间',default=datetime.now)
     save = SubmitField('保存')
     

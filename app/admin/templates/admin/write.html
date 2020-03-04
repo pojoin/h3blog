@@ -100,9 +100,9 @@
         //注册点击事件
         $('#form').on('submit', function (ev) {
             ev.preventDefault();
-            var content = $('#hidden-body').val();
-            var summary = content.replace(/#*.*#/g, '').replace(/[^a-z0-9\u4e00-\u9fa5]/, '').substring(0, 200) // 除去标题部分，截取200个字用来显示
-            $('#summary').val(summary);
+            // var content = $('#hidden-body').val();
+            // var summary = content.replace(/#*.*#/g, '').replace(/[^a-z0-9\u4e00-\u9fa5]/, '').substring(0, 200) // 除去标题部分，截取200个字用来显示
+            // $('#summary').val(summary);
             save(1);
         });
 
@@ -151,6 +151,12 @@
                     <div class="write-article">
                         <div id="write-editor">
                             {{form.content(id='hidden-body',class='hidden')}}
+                        </div>
+                    </div>
+                    <div class="mt-2">
+                        <div class="form-group">
+                            <label for="summary">文章简介</label>
+                            {{form.summary(id='summary',class='form-control')}}
                         </div>
                     </div>
                 </div>
