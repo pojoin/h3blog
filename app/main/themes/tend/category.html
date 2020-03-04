@@ -1,8 +1,8 @@
 {% extends 'common/base.html' %}
 {% import "macros/_patination.html" as page_macros %}
-{% block title %}
-{{category.title}}-{{ super() }}
-{% endblock %}
+{% block title %} {{category.title}}-何三笔记 {% endblock %}
+{% block keywords %} {{category.title}}-何三笔记 {% endblock %}
+{% block description %} {{category.desp if category.desp else ''}} {% endblock %}
 {% block content %}
 <!--面包导航-->
 <nav aria-label="breadcrumb">

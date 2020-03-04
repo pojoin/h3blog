@@ -5,9 +5,9 @@
 <link href="{{ url_for('main.static', filename='css/monokai.css') }}" rel="stylesheet">
 <link href="{{ url_for('main.static', filename='css/base_comment.css') }}" rel="stylesheet">
 {% endblock %}
-{% block title %}
-{{ article.title }}-{{article.category.title}}-{{ super() }}
-{% endblock %}
+{% block title %}{{ article.title }}-{{article.category.title}}-何三笔记{% endblock %}
+{% block keywords %} {{article.title}}-何三笔记 {% endblock %}
+{% block description %} {{article.summary|truncate(80,killwords=True,leeway=0) }} {% endblock %}
 {% block content %}
 <div class="col">
     <nav aria-label="breadcrumb">

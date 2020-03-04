@@ -1,8 +1,8 @@
 {% extends 'common/base.html' %}
 {% import "macros/_patination.html" as page_macros %}
-{% block title %}
-文章归档大全-{{ super() }}
-{% endblock %}
+{% block title %}文章归档大全-{{ super() }}{% endblock %}
+{% block keywords %} 博客文章归档大全-何三笔记 {% endblock %}
+{% block description %}flask博客文章归档大全，对python基础问题记录及python爬虫文章的记录归档{% endblock %}
 {% block css%}
 {{super()}}
 <style type="text/css">

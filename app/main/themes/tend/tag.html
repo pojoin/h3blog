@@ -1,8 +1,8 @@
 {% extends 'common/base.html' %}
 {% import "macros/_patination.html" as page_macros %}
-{% block title %}
-{{tag.name}}-{{ super() }}
-{% endblock %}
+{% block title %}{{tag.name}}-{{ super() }}{% endblock %}
+{% block keywords %} {{tag.name}}-何三笔记 {% endblock %}
+{% block description %} {% endblock %}
 {% block content %}
 <!--面包导航-->
 <nav aria-label="breadcrumb">
@@ -11,7 +11,7 @@
             <i class="fa fa-home mr-1"></i><a href="/">首页</a>
         </li>
         <li class="breadcrumb-item">
-            标签
+            <a href="{{url_for('main.tags')}}">标签云</a>
         </li>
         <li class="breadcrumb-item">
             <a href="{{url_for('main.tag',t=tag.name)}}">{{tag.name}}</a>
