@@ -1,5 +1,8 @@
 {% extends 'common/base.html' %}
 {% import "macros/_patination.html" as page_macros %}
+{% block title %}
+{{super()}}-一个通过python实现赚钱的技术博客
+{% endblock %}
 {% block content %}
 <!--轮播图开始-->
 {% if recommends | length > 0 %}
