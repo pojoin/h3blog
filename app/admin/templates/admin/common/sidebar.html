@@ -2,20 +2,19 @@
     <div class="sidebar-sticky">
       <ul class="nav flex-column">
         <li class="nav-item">
-          <a class="nav-link active" href="{{url_for('admin.index')}}">
-            <span data-feather="home"></span>
-            面板 <span class="sr-only">(current)</span>
+          <a class="nav-link font-weight-bold active" href="{{url_for('admin.index')}}">
+            面板 
           </a>
         </li>
       </ul>
 
-      <h6 class="sidebar-heading d-flex px-3 pt-2  mt-1 mb-1 text-muted ">
+      <h6 class="sidebar-heading d-flex px-3 pt-2  mt-1 mb-1 text-muted">
         <span>文章管理</span>
       </h6>
       <ul class="nav flex-column ml-1">
         <li class="nav-item">
           <a class="nav-link font-weight-bold" href="{{ url_for('admin.write') }}">
-            写文章
+            撰写文章
           </a>
         </li>
         <li class="nav-item">
