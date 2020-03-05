@@ -7,6 +7,15 @@ body {
     height: 16px;
     vertical-align: text-bottom;
   }
+
+.layout-boxed .wrapper {
+    max-width: 1250px;
+    margin: 0 auto;
+    min-height: 100%;
+    box-shadow: 0 0 8px 
+    rgba(0, 0, 0, .5);
+    position: relative;
+} 
   
   /*
    * Sidebar
@@ -88,7 +97,8 @@ body {
     padding-top: .75rem;
     padding-bottom: .75rem;
     font-size: 1rem;
-    background-color: rgba(0, 0, 0, .25);
+    color: #fff;
+    background-color: rgba(88, 8, 238, 0.973);
     box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
   }
   
