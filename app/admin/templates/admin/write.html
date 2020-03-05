@@ -137,7 +137,7 @@
         <form id="form" method="POST">
             {{ form.hidden_tag() }}
             <div class="row">
-                <div class="col">
+                <div class="col-lg-9 col-md-9">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="inputGroup-sizing-default">标题</span>
@@ -160,7 +160,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-3">
+                <div class="col-lg-3 col-md-3">
                     <div id="saveBtns" class="card">
                         <div class="card-body">
                             {{form.save(id='save',class="btn btn-primary btn-sm")}}
