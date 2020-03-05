@@ -72,7 +72,7 @@ class EditUserForm(FlaskForm):
 class ArticleForm(FlaskForm):
     id = HiddenField('id')
     title = StringField('标题',validators=[DataRequired('请录入标题')])
-    name = StringField('标识名称',render_kw={'placeholder':'自定义路径'})
+    name = StringField('标识名称',render_kw={'placeholder':'自定义路径'},validators=[DataRequired()])
     content = TextAreaField('文章内容')
     category_id = SelectField('分类',coerce=int, default=1,validators=[DataRequired('请选择分类')])
     tags = StringField('标签')
