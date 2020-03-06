@@ -43,10 +43,10 @@ $ flask run # 启动
 
 ## 博客截图
 
-![输入图片说明](https://images.gitee.com/uploads/images/2020/0306/141924_e000ec0d_120583.png "Screenshot_2020-03-06 博客登陆.png")
+![登陆](https://images.gitee.com/uploads/images/2020/0306/141924_e000ec0d_120583.png "Screenshot_2020-03-06 博客登陆.png")
 
-![输入图片说明](https://images.gitee.com/uploads/images/2020/0306/141733_3d233e92_120583.png "Screenshot_2020-03-06 何三笔记.png")
+![后台](https://images.gitee.com/uploads/images/2020/0306/141733_3d233e92_120583.png "Screenshot_2020-03-06 何三笔记.png")
 
-![输入图片说明](https://images.gitee.com/uploads/images/2020/0306/141709_72e17390_120583.png "Screenshot_2020-03-06 何三笔记-一个通过python实现赚钱的技术博客.png")
+![博客前端](https://images.gitee.com/uploads/images/2020/0306/141709_72e17390_120583.png "Screenshot_2020-03-06 何三笔记-一个通过python实现赚钱的技术博客.png")
 
 我的博客 [何三笔记](http://www.h3blog.com)
