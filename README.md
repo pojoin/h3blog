@@ -49,3 +49,4 @@ $ flask run # 启动
 
 ![输入图片说明](https://images.gitee.com/uploads/images/2020/0306/141709_72e17390_120583.png "Screenshot_2020-03-06 何三笔记-一个通过python实现赚钱的技术博客.png")
 
+我的博客 [何三笔记](http://www.h3blog.com)
