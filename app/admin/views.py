@@ -63,6 +63,7 @@ def logout():
 
 @admin.route('/articles', methods=['GET'])
 @login_required
+@admin_required
 def articles():
     page = request.args.get('page', 1, type=int)
     articles = Article.query.order_by(Article.timestamp.desc()).paginate(page, per_page=current_app.config['H3BLOG_POST_PER_PAGE'], error_out=False)
@@ -72,7 +73,7 @@ def articles():
 
 @admin.route('/article/edit/<id>', methods=['GET'])
 @login_required
-@author_required
+@admin_required
 def article_edit(id):
     article = Article.query.get(int(id))
     form = ArticleForm(obj=article)
@@ -82,6 +83,7 @@ def article_edit(id):
 
 @admin.route('/article/write', methods=['GET','POST'])
 @login_required
+@admin_required
 def write():
     form = ArticleForm()
     if form.validate_on_submit():
@@ -202,6 +204,8 @@ def password():
 
 
 @admin.route('/upload',methods=['POST'])
+@login_required
+@admin_required
 def upload():
     """图片上传处理"""
     file=request.files.get('file')
@@ -236,6 +240,7 @@ def upload():
 
 @admin.route('/categorys',methods=['GET'])
 @login_required
+@admin_required
 def categorys():
     """
     分类
@@ -247,6 +252,7 @@ def categorys():
 
 @admin.route('/categorys/add',methods=['GET','POST'])
 @login_required
+@admin_required
 def categroy_add():
     """
     添加分类
@@ -264,6 +270,7 @@ def categroy_add():
 
 @admin.route('/categorys/edit/<id>',methods=['GET','POST'])
 @login_required
+@admin_required
 def categroy_edit(id):
     """
     修改分类
@@ -285,6 +292,8 @@ def get_image(filename):
     return send_from_directory(current_app.config['H3BLOG_UPLOAD_PATH'], filename)
 
 @admin.route('/imagehosting')
+@login_required
+@admin_required
 def image_hosting():
     """
     图床
@@ -294,6 +303,7 @@ def image_hosting():
     return render_template('admin/image_hosting.html',imgs = imgs)
 
 @admin.route('/baidu_push_urls',methods=['POST'])
+@admin_required
 def baidu_push_article():
     urls = request.form.get('urls')
     domain = current_app.config.get('H3BLOG_DOMAIN','https://www.h3blog.com')
