@@ -2,6 +2,7 @@
 __author__ = '何三'
 
 from flask_wtf import FlaskForm
+from flask_login import current_user
 from wtforms import StringField,PasswordField, BooleanField, SubmitField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from app.models import User
@@ -29,6 +30,15 @@ class RegistForm(FlaskForm):
         if User.query.filter_by(email=field.data).first():
             raise ValidationError('邮箱已被注册！')
 
+class PasswordForm(FlaskForm):
+	pwd = PasswordField('当前密码', validators=[DataRequired()])
+	password = PasswordField('密码', validators=[DataRequired(), EqualTo('password2', message='密码必须一致！')])
+	password2 = PasswordField('重输密码', validators=[DataRequired()])
+	submit = SubmitField('修改密码')
+	
+	def validate_pwd(self,field):
+		if not current_user.verify_password(field.data):
+			raise ValidationError('当前密码不正确')
 
 class SearchForm(FlaskForm):
 	search = StringField('search', validators=[DataRequired()])

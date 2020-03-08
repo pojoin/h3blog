@@ -3,7 +3,7 @@ from flask import render_template, redirect, request, current_app, \
 from flask_login import login_user, logout_user, login_required, current_user
 from . import main
 from ..models import Article, Tag, Category, article_tag, Recommend, User
-from .forms import SearchForm, LoginForm,RegistForm
+from .forms import SearchForm, LoginForm,RegistForm, PasswordForm
 from app.extensions import db
 from ..import db, sitemap
 
@@ -220,8 +220,23 @@ def regist():
 @main.route('/logout')
 @login_required
 def logout():
-    """
-    退出系统
-    """
+    """退出系统"""
     logout_user()
     return redirect(url_for('main.index'))
+
+@main.route('/profile/',methods=['GET'])
+def profile():
+    '''个人信息'''
+    return render_template('profile.html')
+
+@main.route('/password',methods=['GET','POST'])
+def password():
+    '''修改密码'''
+    form = PasswordForm()
+    if form.validate_on_submit():
+        if current_user.verify_password(form.pwd.data):
+            current_user.password = form.password.data
+            db.session.commit()
+        flash({'success':'修改密码成功'})
+        return redirect(url_for('.profile'))
+    return render_template('password.html',form=form)
