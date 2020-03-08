@@ -8,6 +8,7 @@ from flask_wtf.csrf import CSRFError
 from app.util import pretty_date
 from app.extensions import db, sitemap, login_manager, migrate
 from app.settings import config
+from app.template_filter import register_template_filter
 
 basedir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 
@@ -27,6 +28,7 @@ def create_app(config_name=None):
     register_shell_context(app)
     register_request_handlers(app)
     register_jiaja2_filters(app)
+    register_template_filter(app)
 
     return app
 

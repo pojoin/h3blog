@@ -33,7 +33,7 @@
                 <!-- <a class="mx-2 to-com" href="#comment-block">评论 1</a> -->
             </div>
             <div class="article-body mt-4 f-17" style="line-height:1.8">
-                {{article.content_html|safe}}
+                {{article.content_html|hidden_content|safe}}
             </div>
             <blockquote class="p-1 f-14 mt-3" style="border-left: 4px solid #dc3545;">
                 <p class="m-1"><strong>版权声明：</strong>如无特殊说明，文章均为本站原创，转载请注明出处</p>
@@ -101,70 +101,6 @@
             </div>
         </div>
     </div>
-    <!--
-    <div class="card mt-2 rounded-0 border-0" id="comment-block">
 
-        <div class="card border-0 rounded-0 f-16" id="editor-block">
-
-            <div class="card-body text-center m-2 m-md-3 f-16" id="no-editor">
-                <div>您尚未登录，请
-                    <a class="text-danger" href="/accounts/login/?next=/article/python-spider-sina-weipan/">登录</a> 或
-                    <a class="text-danger" href="/accounts/signup/?next=/article/python-spider-sina-weipan/">注册</a> 后评论
-                </div>
-                <div class="login-link mt-2">
-                    <a class="mx-3" href="/accounts/weibo/login/?next=/article/python-spider-sina-weipan/"
-                        title="社交账号登录有点慢，请耐心等候！"><i class="fa fa-weibo fa-2x"></i></a>
-                    <a class="mx-3" href="/accounts/github/login/?next=/article/python-spider-sina-weipan/"
-                        title="社交账号登录有点慢，请耐心等候！"><i class="fa fa-github fa-2x"></i></a>
-                </div>
-            </div>
-
-        </div>
-
-        
-        <div class="card-body p-2 p-md-3 f-17" id="comment-list">
-            <ul class="list-unstyled">
-                <div class="mb-3">
-                    <strong>1&nbsp;人参与&nbsp;|&nbsp;1&nbsp;条评论</strong>
-                </div>
-
-                <div class="comment-parent pt-2" id="com-624">
-                    <li class="media">
-
-
-                        <img class="avatar" src="https://avatars3.githubusercontent.com/u/48463320?v=4"
-                            alt="duanrungang">
-
-                        <div class="media-body ml-2">
-                            <a class="float-right small mr-2 rep-btn" href="#editor-block" data-repid="624"
-                                data-repuser="duanrungang">回复</a>
-                            <p class="mt-0 mb-1">
-
-
-                                <strong>
-                                    <a href="https://github.com/duanrungang" title="前往 duanrungang 的个人网站"
-                                        target="_blank">duanrungang
-                                    </a>
-                                </strong>
-
-
-
-                                <i class="fa fa-github" title="Github 绑定用户"></i>
-
-
-
-                            </p>
-                            <p class="small text-muted">1&nbsp;楼&nbsp;-&nbsp;3月，1&nbsp;周前</p>
-                        </div>
-                    </li>
-                    <div class="comment-body">
-                        <p>博主你好，你的文章写的真好，对我很有帮助！！非常感谢！</p>
-                    </div>
-                </div>
-
-            </ul>
-        </div>
-    </div>
-    -->
 </div>
 {% endblock %}

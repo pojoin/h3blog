@@ -190,7 +190,7 @@ def login():
         elif u is not None and u.verify_password(login_form.password.data.strip()) and u.status:
             login_user(user=u, remember=login_form.remember_me.data)
             flash({'success':'欢迎{}登陆成功'.format(u.username)})
-            return redirect(url_for('main.index'))
+            return redirect(request.args.get('next',url_for('main.index')))
         elif not u.status:
             flash({'error': '用户已被管理员注销！'})
         elif not u.verify_password(login_form.password.data.strip()):
@@ -214,7 +214,7 @@ def regist():
         db.session.commit()
         login_user(user=u)
         flash({'success':'欢迎{}注册成功'.format(u.username)})
-        return redirect(url_for('main.index'))
+        return redirect(request.args.get('next',url_for('main.index')))
     return render_template('regist.html',form=form)
 
 @main.route('/logout')
