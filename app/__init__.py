@@ -84,6 +84,14 @@ def register_errors(app):
     pass
 
 def register_request_handlers(app):
+    from flask_login import current_user
+    @app.context_processor
+    def context_processor():
+        '''
+        上下文处理器, 返回的字典可以在全部模板中使用
+        '''
+        return {'current_user': current_user}
+
     @app.after_request
     def query_profiler(response):
         for q in get_debug_queries():

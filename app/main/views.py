@@ -1,8 +1,10 @@
 from flask import render_template, redirect, request, current_app, \
-    url_for, g, send_from_directory, abort
+    url_for, g, send_from_directory, abort, flash
+from flask_login import login_user, logout_user, login_required, current_user
 from . import main
-from ..models import Article, Tag, Category, article_tag, Recommend
-from .forms import SearchForm
+from ..models import Article, Tag, Category, article_tag, Recommend, User
+from .forms import SearchForm, LoginForm,RegistForm
+from app.extensions import db
 from ..import db, sitemap
 
 
@@ -176,3 +178,50 @@ def robots():
 @main.route('/tool/')
 def tool():
     return render_template('tool.html')
+
+
+@main.route('/login', methods=['GET', 'POST'])
+def login():
+    login_form = LoginForm(prefix='login')
+    if login_form.validate_on_submit():
+        u = User.query.filter_by(username=login_form.username.data.strip()).first()
+        if u is None:
+            flash({'error': '帐号未注册！'})
+        elif u is not None and u.verify_password(login_form.password.data.strip()) and u.status:
+            login_user(user=u, remember=login_form.remember_me.data)
+            flash({'success':'欢迎{}登陆成功'.format(u.username)})
+            return redirect(url_for('main.index'))
+        elif not u.status:
+            flash({'error': '用户已被管理员注销！'})
+        elif not u.verify_password(login_form.password.data.strip()):
+            flash({'error': '密码不正确！'})
+
+    return render_template('login.html', form=login_form)
+
+@main.route('/regist', methods=['GET', 'POST'])
+def regist():
+    '''
+    注册
+    '''
+    form = RegistForm(prefix='regist')
+    if form.validate_on_submit():
+        u = User(username=form.username.data.strip(),
+                email=form.email.data.strip(),
+                password=form.password.data.strip(),
+                status=True, role=False
+                )
+        db.session.add(u)
+        db.session.commit()
+        login_user(user=u)
+        flash({'success':'欢迎{}注册成功'.format(u.username)})
+        return redirect(url_for('main.index'))
+    return render_template('regist.html',form=form)
+
+@main.route('/logout')
+@login_required
+def logout():
+    """
+    退出系统
+    """
+    logout_user()
+    return redirect(url_for('main.index'))

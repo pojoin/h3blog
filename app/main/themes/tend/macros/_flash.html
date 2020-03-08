@@ -1,0 +1,23 @@
+{% macro flash_msg() %}
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+{% for message in messages %}
+{% if message['error'] %}
+<div class="alert alert-danger" role="alert">
+    {{ message['error'] }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{% elif message['success']%}
+<div class="alert alert-success" role="alert">
+    {{ message['success'] }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endwith %}
+{% endmacro %}

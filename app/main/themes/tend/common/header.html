@@ -4,42 +4,61 @@
         <strong class="px-2">何三笔记</strong>
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item mr-2">
-                <a class="nav-link py-md-3 {{'active' if request.path == url_for('main.index') else ''}}" href="{{url_for('main.index')}}"><i class="fa fa-home mr-1"></i>首页<span class="sr-only">(current)</span></a>
+                <a class="nav-link py-md-3 {{'active' if request.path == url_for('main.index') else ''}}"
+                    href="{{url_for('main.index')}}"><i class="fa fa-home mr-1"></i>首页<span
+                        class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item mr-2">
-                <a class="nav-link py-md-3 {{'active' if request.path == url_for('main.archive') else ''}}" href="{{url_for('main.archive')}}"><i class="fa fa-sitemap mr-1"></i>归档</a>
+                <a class="nav-link py-md-3 {{'active' if request.path == url_for('main.archive') else ''}}"
+                    href="{{url_for('main.archive')}}"><i class="fa fa-sitemap mr-1"></i>归档</a>
             </li>
             <li class="nav-item mr-2">
-                <a class="nav-link py-md-3 {{'active' if request.path == url_for('main.tool') else ''}}" href="{{url_for('.tool')}}"><i class="fa fa-balance-scale mr-1"></i>在线工具</a>
+                <a class="nav-link py-md-3 {{'active' if request.path == url_for('main.tool') else ''}}"
+                    href="{{url_for('.tool')}}"><i class="fa fa-balance-scale mr-1"></i>在线工具</a>
             </li>
             <li class="nav-item mr-2 ">
-                <a class="nav-link py-md-3 {{'active' if request.path == url_for('main.about') else ''}}" href="{{url_for('main.about')}}" href="{{url_for('main.about')}}"><i class="fa fa-anchor mr-1"></i>关于</a>
+                <a class="nav-link py-md-3 {{'active' if request.path == url_for('main.about') else ''}}"
+                    href="{{url_for('main.about')}}" href="{{url_for('main.about')}}"><i
+                        class="fa fa-anchor mr-1"></i>关于</a>
             </li>
-            <form class="nav-item navbar-form mr-2 py-md-2" role="search" method="get" id="searchform" action="/search/">
+            <form class="nav-item navbar-form mr-2 py-md-2" role="search" method="get" id="searchform"
+                action="/search/">
                 <div class="input-group">
-                    <input type="search" name="q" class="form-control rounded-0" placeholder="站内搜索" autocomplete="off" required=True>
+                    <input type="search" name="q" class="form-control rounded-0" placeholder="站内搜索" autocomplete="off"
+                        required=True>
                     <div class="input-group-btn">
                         <button class="btn btn-info rounded-0" type="submit"><i class="fa fa-search"></i></button>
                     </div>
                 </div>
             </form>
         </ul>
-        <!-- <ul class="navbar-nav">
-            
+        <ul class="navbar-nav">
+            {% if current_user.is_authenticated %}
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false" title="{{current_user.username}}，欢迎回来！">
+
+                    <img class="avatar" src="{{url_for('.static',filename='img/avatar.png')}}" alt="{{current_user.username}}">
+                </a>
+                <div class="dropdown-menu dropdown-menu-right mt-0 rounded-0 border-0" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item pl-3" href="/profile/">
+                        <i class="fa fa-fw fa-user text-info mr-2"></i>个人资料</a>
+                    <a class="dropdown-item pl-3" href="{{url_for('.logout')}}">
+                        <i class="fa fa-fw fa-sign-out text-info mr-2"></i>退出</a>
+                </div>
+            </li>
+            {% else %}
             <li class="nav-item mr-2">
-                <a class="nav-link py-md-3" href="/accounts/login/?next=/">登录</a>
+                <a class="nav-link py-md-3" href="{{url_for('main.login')}}">登录</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link py-md-3" href="/accounts/signup/?next=/">注册</a>
-            </li>
-            
-        </ul> -->
+            {% endif %}
+        </ul>
     </div>
 </nav>
 <!--导航结束-->

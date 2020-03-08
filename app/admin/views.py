@@ -13,6 +13,7 @@ from app.util import admin_required, author_required, isAjax, upload_file_qiniu,
 
 @admin.route('/', methods=['GET', 'POST'])
 @login_required
+@admin_required
 def index():
     current_user.ping()
 
