@@ -155,3 +155,14 @@ class Recommend(db.Model):
     sn = db.Column(db.Integer,default=0)
     state = db.Column(db.Integer, default=1)
     timestamp = db.Column(db.DateTime, default=datetime.now)
+
+class AccessLog(db.Model):
+    '''
+    请求日志
+    '''
+    __tablename__ = 'access_log'
+    id = db.Column(db.Integer, primary_key=True)
+    ip = db.Column(db.String(20))
+    url = db.Column(db.String(120))
+    timestamp = db.Column(db.DateTime, default=datetime.now)
+    remark = db.Column(db.String(32))

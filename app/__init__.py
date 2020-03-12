@@ -2,13 +2,14 @@ import os
 import logging
 import click
 from logging.handlers import RotatingFileHandler
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flask_sqlalchemy import get_debug_queries
 from flask_wtf.csrf import CSRFError
 from app.util import pretty_date
 from app.extensions import db, sitemap, login_manager, migrate
 from app.settings import config
 from app.template_filter import register_template_filter
+from app.models import AccessLog
 
 basedir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 
@@ -79,7 +80,7 @@ def register_shell_context(app):
     @app.shell_context_processor
     def make_shell_context():
         from app.models import User, Article, Category, Tag, article_tag, Recommend
-        return dict(db=db, User=User, Article=Article, Category=Category, Tag=Tag, Recommend = Recommend)
+        return dict(db=db, User=User, Article=Article, Category=Category, Tag=Tag, Recommend = Recommend, AccessLog = AccessLog)
 
 
 def register_errors(app):
@@ -93,6 +94,15 @@ def register_request_handlers(app):
         上下文处理器, 返回的字典可以在全部模板中使用
         '''
         return {'current_user': current_user}
+
+    @app.before_request
+    def before_app_request():
+        user_agent = request.headers.get("User-Agent")
+        if 'Baiduspider' in user_agent :
+            accessLog = AccessLog(ip = request.remote_addr,
+                url = request.path,
+                remark = 'baidu')
+            db.session.add(accessLog)
 
     @app.after_request
     def query_profiler(response):
