@@ -374,6 +374,6 @@ def access_logs():
     搜索引擎抓取记录
     '''
     page = request.args.get('page',1, type=int)
-    logs = AccessLog.query. \
+    logs = AccessLog.query.order_by(AccessLog.timestamp.desc()). \
         paginate(page, per_page=current_app.config['H3BLOG_POST_PER_PAGE'], error_out=False)
     return render_template('admin/access_log.html',logs = logs)
