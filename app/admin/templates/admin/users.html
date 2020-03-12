@@ -1,9 +1,10 @@
 {% extends 'admin/common/base.html' %}
 {% block content %}
 {% include 'admin/common/alert.html' %}
-<div class="admin-content">
+<div class="container">
     <div class="row">
-        <table class="table table-striped table-hover">
+        <a href="#" data-toggle="modal" data-target="#user-add" title="添加用户"> 添加用户</a>
+        <table class="table table-bordered">
             <thead>
                 <tr>
                     <th>序号</th>
@@ -13,7 +14,7 @@
                     <th>上次登录时间</th>
                     <th>权限</th>
                     <th>状态</th>
-                    <th><a class="btn btn-xs btn-primary" type="button" data-toggle="modal" data-target="#user-add" title="添加用户"> 添加用户</a></th>
+                    <th>操作</th>
                 </tr>
             </thead>
             <tbody class="small">
@@ -22,8 +23,8 @@
                     <th scope="row">{{ loop.index }}</th>
                     <td>{{ user.username}}</td>
                     <td>{{ user.email}}</td>
-                    <td>{{ moment(user.member_since).format('LL') }}</td>
-                    <td>{{ moment(user.last_seen).format('LL') }}</td>
+                    <td>{{ user.member_since.strftime("%Y-%m-%d %H:%M:%S") }}</td>
+                    <td>{{ user.last_seen.strftime("%Y-%m-%d %H:%M:%S") }}</td>
                     {% if user.role %}
                         <td>管理员</td>
                     {% else %}

@@ -138,10 +138,10 @@ def write():
 
     return render_template('admin/write.html', form=form)
 
-@admin.route('/user-settings', methods=['GET', 'POST'])
+@admin.route('/users', methods=['GET', 'POST'])
 @login_required
 @admin_required
-def user_settings():
+def users():
     add_user_form = AddUserForm(prefix='add_user')
     delete_user_form = DeleteUserForm(prefix='delete_user')
     if add_user_form.validate_on_submit():
