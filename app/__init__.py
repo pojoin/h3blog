@@ -110,10 +110,10 @@ def register_request_handlers(app):
         if 'Sosospider' in user_agent:
             remark = '搜搜'
 
-        if not remark :    
+        if remark :    
             accessLog = AccessLog(ip = request.remote_addr,
                 url = request.path,
-                remark = 'baidu')
+                remark = remark)
             db.session.add(accessLog)
 
     @app.after_request
