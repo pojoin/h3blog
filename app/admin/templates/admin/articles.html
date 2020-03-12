@@ -3,6 +3,26 @@
 {% block content %}
 <div class="admin-content">
     <div class="row">
+        <form class="ml-3">
+          <div class="form-row align-items-center">
+            <div class="col-auto">
+              <label class="sr-only" for="title">标题</label>
+              <input type="text" name="title" value="{{title}}" class="form-control mb-2" id="title" placeholder="标题">
+            </div>
+            <!-- <div class="col-auto">
+              <label class="sr-only" for="inlineFormInputGroup">Username</label>
+              <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">@</div>
+                </div>
+                <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Username">
+              </div>
+            </div> -->
+            <div class="col-auto">
+              <button type="submit" class="btn btn-primary mb-2">搜索</button>
+            </div>
+          </div>
+        </form>
         <table class="table table-bordered">
             <thead>
               <tr>
@@ -37,6 +57,6 @@
             </tbody>
           </table>
     </div>
-    {{ page_macros.pagination_widget(articles, 'admin.articles') }}
+    {{ page_macros.pagination_widget(articles, request.endpoint,title = title) }}
 </div>
 {% endblock %}

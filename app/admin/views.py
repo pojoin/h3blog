@@ -66,10 +66,13 @@ def logout():
 @login_required
 @admin_required
 def articles():
+    title = request.args.get('title','')
     page = request.args.get('page', 1, type=int)
-    articles = Article.query.order_by(Article.timestamp.desc()).paginate(page, per_page=current_app.config['H3BLOG_POST_PER_PAGE'], error_out=False)
+    articles = Article.query.filter(
+        Article.title.like("%" + title + "%") if title is not None else ''
+        ).order_by(Article.timestamp.desc()).paginate(page, per_page=current_app.config['H3BLOG_POST_PER_PAGE'], error_out=False)
 
-    return render_template('admin/articles.html', articles=articles)
+    return render_template('admin/articles.html', articles=articles,title = title)
 
 
 @admin.route('/article/edit/<id>', methods=['GET'])
@@ -373,7 +376,11 @@ def access_logs():
     '''
     搜索引擎抓取记录
     '''
+    remark = request.args.get('remark','')
+    params = {'remark': remark}
     page = request.args.get('page',1, type=int)
-    logs = AccessLog.query.order_by(AccessLog.timestamp.desc()). \
+    logs = AccessLog.query.filter(
+        AccessLog.remark.like("%" + remark + "%") if remark is not None else ''
+        ).order_by(AccessLog.timestamp.desc()). \
         paginate(page, per_page=current_app.config['H3BLOG_POST_PER_PAGE'], error_out=False)
-    return render_template('admin/access_log.html',logs = logs)
+    return render_template('admin/access_log.html',logs = logs,params = params)

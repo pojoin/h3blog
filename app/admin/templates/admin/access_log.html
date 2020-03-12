@@ -3,9 +3,27 @@
 {% block content %}
 <div class="container">
     <div class="row">
-        <div>
         <h3>抓取日志列表</h3>
-        </div>
+        <form class="ml-3">
+          <div class="form-row align-items-center">
+            <div class="col-auto">
+              <label class="sr-only" for="remark">搜索引擎</label>
+              <input type="text" name="remark" value="{{params.remark}}" class="form-control mb-2" id="remark" placeholder="搜索引擎">
+            </div>
+            <!-- <div class="col-auto">
+              <label class="sr-only" for="inlineFormInputGroup">Username</label>
+              <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">@</div>
+                </div>
+                <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Username">
+              </div>
+            </div> -->
+            <div class="col-auto">
+              <button type="submit" class="btn btn-primary mb-2">搜索</button>
+            </div>
+          </div>
+        </form>
         <table class="table table-bordered">
             <thead>
               <tr>
@@ -30,6 +48,6 @@
             </tbody>
           </table>
     </div>
-    {{ page_macros.pagination_widget(logs, 'admin.access_logs') }}
+    {{ page_macros.pagination_widget(logs, request.endpoint,remark=params.remark) }}
 </div>
 {% endblock %}
