@@ -98,7 +98,19 @@ def register_request_handlers(app):
     @app.before_request
     def before_app_request():
         user_agent = request.headers.get("User-Agent")
+        remark = None
         if 'Baiduspider' in user_agent :
+            remark = '百度'
+        if 'Bytespider' in user_agent :
+            remark = '头条搜索'
+        if 'YisouSpider' in user_agent:
+            remark = '神马搜索'
+        if 'Sogou' in user_agent:
+            remark = '搜狗'
+        if 'Sosospider' in user_agent:
+            remark = '搜搜'
+
+        if not remark :    
             accessLog = AccessLog(ip = request.remote_addr,
                 url = request.path,
                 remark = 'baidu')

@@ -4,7 +4,7 @@ from . import admin
 from app.extensions import db
 from .forms import AddAdminForm, LoginForm, AddUserForm, DeleteUserForm, EditUserForm, ArticleForm, \
         ChangePasswordForm, AddFolderForm, CategoryForm, RecommendForm
-from app.models import User, Category, Tag, Article, Recommend
+from app.models import User, Category, Tag, Article, Recommend, AccessLog
 import os
 from datetime import datetime
 from app.util import admin_required, author_required, isAjax, upload_file_qiniu, allowed_file, \
@@ -313,6 +313,7 @@ def baidu_push_article():
 
 @admin.route('/recommends',methods=['GET'])
 @login_required
+@admin_required
 def recommends():
     '''
     推荐列表
@@ -324,6 +325,7 @@ def recommends():
 
 @admin.route('/recommends/add',methods=['GET','POST'])
 @login_required
+@admin_required
 def recommends_add():
     '''
     添加推荐
@@ -343,6 +345,7 @@ def recommends_add():
 
 @admin.route('/recommends/edit/<id>',methods=['GET','POST'])
 @login_required
+@admin_required
 def recommends_edit(id):
     """
     修改推荐
@@ -360,3 +363,17 @@ def recommends_edit(id):
 
     form = RecommendForm(obj=r)
     return render_template('admin/recommend.html',form=form)
+
+
+
+@admin.route('/accesslogs',methods=['GET'])
+@login_required
+@admin_required
+def access_logs():
+    '''
+    搜索引擎抓取记录
+    '''
+    page = request.args.get('page',1, type=int)
+    logs = AccessLog.query. \
+        paginate(page, per_page=current_app.config['H3BLOG_POST_PER_PAGE'], error_out=False)
+    return render_template('admin/access_log.html',logs = logs)
