@@ -308,7 +308,7 @@ def image_hosting():
     # imgs = file_list_qiniu()
     page = request.args.get('page',1, type=int)
     imgs = Picture.query.order_by(Picture.id.desc()). \
-        paginate(page, per_page=current_app.config['H3BLOG_POST_PER_PAGE'], error_out=False)
+        paginate(page, per_page=20, error_out=False)
     return render_template('admin/image_hosting.html',imgs = imgs)
 
 @admin.route('/baidu_push_urls',methods=['POST'])
