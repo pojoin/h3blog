@@ -4,7 +4,7 @@ from . import admin
 from app.extensions import db
 from .forms import AddAdminForm, LoginForm, AddUserForm, DeleteUserForm, EditUserForm, ArticleForm, \
         ChangePasswordForm, AddFolderForm, CategoryForm, RecommendForm
-from app.models import User, Category, Tag, Article, Recommend, AccessLog
+from app.models import User, Category, Tag, Article, Recommend, AccessLog, Picture
 import os
 from datetime import datetime
 from app.util import admin_required, author_required, isAjax, upload_file_qiniu, allowed_file, \
@@ -221,18 +221,20 @@ def upload():
     else:
         url_path = ''
         upload_type = current_app.config.get('H3BLOG_UPLOAD_TYPE')
+        ex=os.path.splitext(file.filename)[1]
+        filename=datetime.now().strftime('%Y%m%d%H%M%S')+ex
         if upload_type is None or upload_type == '' or upload_type == 'local':
-            ex=os.path.splitext(file.filename)[1]
-            filename=datetime.now().strftime('%Y%m%d%H%M%S')+ex
             file.save(os.path.join(current_app.config['H3BLOG_UPLOAD_PATH'],filename))
             url_path = url_for('admin.get_image',filename=filename)
         elif upload_type == 'qiniu':
             try:
                 qiniu_cdn_url = current_app.config.get('QINIU_CDN_URL')
-                url_path = qiniu_cdn_url + upload_file_qiniu(file.read(),file.filename)
+                url_path = qiniu_cdn_url + upload_file_qiniu(file.read(),filename)
             except Exception as e:
                 return jsonify({'success':0,'message':'上传图片异常'})
         #返回
+        pic = Picture(name = file.filename,url = url_path)
+        db.session.add(pic)
         res={
             'code':1,
             'msg':u'图片上传成功',
@@ -302,8 +304,11 @@ def image_hosting():
     """
     图床
     """
-    from app.util import file_list_qiniu
-    imgs = file_list_qiniu()
+    # from app.util import file_list_qiniu
+    # imgs = file_list_qiniu()
+    page = request.args.get('page',1, type=int)
+    imgs = Picture.query.order_by(Picture.id.desc()). \
+        paginate(page, per_page=current_app.config['H3BLOG_POST_PER_PAGE'], error_out=False)
     return render_template('admin/image_hosting.html',imgs = imgs)
 
 @admin.route('/baidu_push_urls',methods=['POST'])

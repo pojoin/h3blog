@@ -1,9 +1,10 @@
 {% extends 'admin/common/base.html' %}
+{% import "admin/macros/_patination.html" as page_macros %}
 {% block css %}
 {{super()}}
 <style>
     .selectCard {
-        border: 5px solid rgb(48, 4, 241);
+        border: 2px solid rgb(48, 4, 241);
     }
 
     .navbar img {
@@ -74,16 +75,17 @@
 {% block body %}
 <div class="container mt-1">
     <div class="row">
-        {% for img in imgs%}
-        <div class="card m-1" style="width: 15rem;">
-            <img src="{{img.url}}" class="card-img-top rounded" style="height: 13rem;" alt="{{img.key}}">
+        {% for img in imgs.items%}
+        <div class="card m-1" style="width: 13rem;">
+            <img src="{{img.url}}" class="card-img-top rounded" style="height: 12rem;" alt="{{img.name}}">
             <div class="card-body">
-                <h5 class="card-title">{{img.key}}</h5>
+                <span>{{img.name}}</span>
             </div>
         </div>
         <!--end card-->
         {% endfor %}
     </div>
+    {{ page_macros.pagination_widget(imgs, request.endpoint) }}
     <div class="m-3" style="height: 3rem;"></div>
     <div class="row fixed-bottom bg-light navbar">
         <input type="file" hidden id="img-file" accept="image/*"/>

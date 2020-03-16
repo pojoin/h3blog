@@ -166,3 +166,14 @@ class AccessLog(db.Model):
     url = db.Column(db.String(120))
     timestamp = db.Column(db.DateTime, default=datetime.now)
     remark = db.Column(db.String(32))
+
+class Picture(db.Model):
+    '''
+    图片
+    '''
+    __tablename__ = 'picture'
+    id = db.Column(db.Integer, primary_key = True)
+    name = db.Column(db.String(64))
+    timestamp = db.Column(db.DateTime, default=datetime.now)
+    url = db.Column(db.String(120))
+    remark = db.Column(db.String(32))
