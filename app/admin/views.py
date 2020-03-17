@@ -3,12 +3,12 @@ from flask_login import login_user, logout_user, login_required, current_user
 from . import admin
 from app.extensions import db
 from .forms import AddAdminForm, LoginForm, AddUserForm, DeleteUserForm, EditUserForm, ArticleForm, \
-        ChangePasswordForm, AddFolderForm, CategoryForm, RecommendForm
-from app.models import User, Category, Tag, Article, Recommend, AccessLog, Picture
+        ChangePasswordForm, AddFolderForm, CategoryForm, RecommendForm, InvitcodeForm
+from app.models import User, Category, Tag, Article, Recommend, AccessLog, Picture, InvitationCode
 import os
 from datetime import datetime
 from app.util import admin_required, author_required, isAjax, upload_file_qiniu, allowed_file, \
-    baidu_push_urls, strip_tags
+    baidu_push_urls, strip_tags, gen_invit_code
 
 
 @admin.route('/', methods=['GET', 'POST'])
@@ -389,3 +389,24 @@ def access_logs():
         ).order_by(AccessLog.timestamp.desc()). \
         paginate(page, per_page=current_app.config['H3BLOG_POST_PER_PAGE'], error_out=False)
     return render_template('admin/access_log.html',logs = logs,params = params)
+
+@admin.route('/invitcodes',methods=['GET','POST'])
+@login_required
+@admin_required
+def invit_codes():
+    '''
+    邀请码
+    '''
+    form = InvitcodeForm()
+    if form.validate_on_submit:
+        count = int(form.count.data)
+        cs = gen_invit_code(count,15)
+        for c in cs:
+            ic = InvitationCode(code = c)
+            db.session.add(ic)
+        db.session.commit()
+    page = request.args.get('page',1, type=int)
+    codes = InvitationCode.query.order_by(InvitationCode.id.asc()). \
+        paginate(page, per_page=current_app.config['H3BLOG_POST_PER_PAGE'], error_out=False)
+    
+    return render_template('admin/invit_codes.html',codes = codes,form = form)

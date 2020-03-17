@@ -178,3 +178,23 @@ def strip_tags(string, allowed_tags=''):
         string = re.sub(r'<[^>]*?>', '', string)
   
     return string
+
+def gen_invit_code(count,long):
+    '''
+    生成邀请码
+    count 数量
+    long 长度
+    '''
+    import string, random
+    r = []
+    base_string = string.digits+string.ascii_letters
+    for i in range(count):
+        card_code = ''
+        for j in range(long):
+            card_code += random.choice(base_string)
+        r.append(card_code)
+    return r
+
+if __name__ == "__main__":
+    codes = gen_invit_code(1000,15)
+    print(codes)

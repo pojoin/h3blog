@@ -116,6 +116,9 @@ class RecommendForm(FlaskForm):
     submit = SubmitField('提交')
 
 
+class InvitcodeForm(FlaskForm):
+    count = IntegerField('数量', default=0,validators=[DataRequired()])
+    submit = SubmitField('提交')
 
 class BaidutongjiForm(FlaskForm):
     token = StringField('健值')

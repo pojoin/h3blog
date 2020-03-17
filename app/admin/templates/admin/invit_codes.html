@@ -1,0 +1,60 @@
+{% extends 'admin/common/base.html' %}
+{% import "admin/macros/_patination.html" as page_macros %}
+{% block content %}
+<div class="container">
+  <div class="row">
+    <button data-toggle="modal" data-target="#invitcode-add" class="btn btn-sm btn-primary ml-2 mb-2">生成邀请码</button>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">邀请码</th>
+          <th scope="col">会员</th>
+          <th scope="col">状态</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for c in codes.items %}
+        <tr>
+          <th scope="row">{{c.id}}</th>
+          <td>{{ c.code }}</td>
+          <td>{{ c.user }}</td>
+          <td>{{ c.state }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {{ page_macros.pagination_widget(codes, request.endpoint) }}
+</div>
+<!-- Modal -->
+<div class="modal fade bs-example-modal-sm" id="invitcode-add" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-sm" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">生成邀请码</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+          <div class="modal-body">
+              <div class="add-user">
+              <form method="post" role="form">
+                  {{ form.hidden_tag() }} 
+                  <div class="form-group row">
+                    <label for="count" class="col-sm-5 col-form-label">生成数量：</label>
+                    <div class="col-sm-7">
+                      {{form.count(id='count',class='form-control')}}
+                    </div>
+                  </div>  
+                  <div class="modal-footer">
+                      <input class="btn btn-default" type="reset" value="重 置">
+                      {{ form.submit(class="btn btn-primary") }}
+                  </div>
+              </form>
+          </div>
+          </div>
+      </div>
+  </div>
+</div>
+{% endblock %}

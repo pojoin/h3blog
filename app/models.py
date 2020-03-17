@@ -177,3 +177,15 @@ class Picture(db.Model):
     timestamp = db.Column(db.DateTime, default=datetime.now)
     url = db.Column(db.String(120))
     remark = db.Column(db.String(32))
+
+class InvitationCode(db.Model):
+    '''
+    邀请码
+    '''
+    __tablename__ = 'invitation_code'
+    id = db.Column(db.Integer, primary_key = True)
+    code = db.Column(db.String(64),unique = True, nullable=False)
+    user = db.Column(db.String(64))
+    state = db.Column(db.Boolean, default=True)
+    
+

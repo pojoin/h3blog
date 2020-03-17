@@ -39,7 +39,7 @@ class BaseConfig(object):
 
     H3BLOG_UPLOAD_TYPE = 'qiniu' # 默认本地上传
     H3BLOG_UPLOAD_PATH = os.path.join(basedir, 'uploads')
-    H3BLOG_ALLOWED_IMAGE_EXTENSIONS = ['png', 'jpg', 'jpeg', 'gif']
+    H3BLOG_ALLOWED_IMAGE_EXTENSIONS = ['png', 'jpg', 'jpeg', 'gif', 'webp']
 
     MAX_CONTENT_LENGTH = 32 * 1024 * 1024
 
