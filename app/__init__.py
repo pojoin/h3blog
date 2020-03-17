@@ -101,6 +101,8 @@ def register_request_handlers(app):
     @app.before_request
     def before_app_request():
         user_agent = request.headers.get("User-Agent")
+        if user_agent is None:
+            return
         remark = None
         if 'Baiduspider' in user_agent :
             remark = '百度'

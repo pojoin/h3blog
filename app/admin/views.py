@@ -233,7 +233,7 @@ def upload():
             except Exception as e:
                 return jsonify({'success':0,'message':'上传图片异常'})
         #返回
-        pic = Picture(name = file.filename,url = url_path)
+        pic = Picture(name = file.filename if len(file.filename)< 32 else filename,url = url_path)
         db.session.add(pic)
         res={
             'code':1,
