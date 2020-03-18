@@ -53,7 +53,15 @@
                                 {{form.password2(placeholder="密码(重复)",class="form-control")}}
                             </div>
                         </div>
-
+                        {% if config.H3BLOG_REGISTER_INVITECODE %}
+                        <div id="div_id_code" class="form-group"> 
+                            <label for="code" class="col-form-label  requiredField">
+                                邀请码<span class="asteriskField">*</span> </label>
+                            <div class=""> 
+                                {{form.code(class="form-control",placeholder="邀请码" )}}
+                            </div>
+                        </div>
+                        {% endif %}
                         <a class="secondaryAction" href="{{url_for('.login')}}">已有账号登录</a>
                         {{form.submit(class="pull-right btn btn-info btn-sm rounded-2")}}
                     </form>

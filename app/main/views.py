@@ -2,8 +2,8 @@ from flask import render_template, redirect, request, current_app, \
     url_for, g, send_from_directory, abort, flash
 from flask_login import login_user, logout_user, login_required, current_user
 from . import main
-from ..models import Article, Tag, Category, article_tag, Recommend, User
-from .forms import SearchForm, LoginForm,RegistForm, PasswordForm
+from ..models import Article, Tag, Category, article_tag, Recommend, User, InvitationCode
+from .forms import SearchForm, LoginForm,RegistForm, PasswordForm, InviteRegistForm
 from app.extensions import db
 from ..import db, sitemap
 
@@ -203,14 +203,23 @@ def regist():
     '''
     注册
     '''
+    is_use_invite_code = current_app.config['H3BLOG_REGISTER_INVITECODE']
     form = RegistForm(prefix='regist')
-    if form.validate_on_submit():
+    if is_use_invite_code:
+        form = InviteRegistForm(prefix='regist')
+    if form.validate_on_submit(): 
         u = User(username=form.username.data.strip(),
                 email=form.email.data.strip(),
                 password=form.password.data.strip(),
                 status=True, role=False
                 )
         db.session.add(u)
+        if is_use_invite_code:
+            ic = InvitationCode.query.filter(InvitationCode.code == form.code.data.strip()).first()
+            if ic :
+                ic.user = u.username
+                ic.state = False
+        
         db.session.commit()
         login_user(user=u)
         flash({'success':'欢迎{}注册成功'.format(u.username)})

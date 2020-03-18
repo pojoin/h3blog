@@ -36,6 +36,7 @@ class BaseConfig(object):
     H3BLOG_MANAGE_POST_PER_PAGE = 15
     H3BLOG_COMMENT_PER_PAGE = 15
     H3BLOG_SLOW_QUERY_THRESHOLD = 1
+    H3BLOG_REGISTER_INVITECODE = True   # 是否开启邀请码注册
 
     H3BLOG_UPLOAD_TYPE = 'qiniu' # 默认本地上传
     H3BLOG_UPLOAD_PATH = os.path.join(basedir, 'uploads')

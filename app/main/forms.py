@@ -5,7 +5,7 @@ from flask_wtf import FlaskForm
 from flask_login import current_user
 from wtforms import StringField,PasswordField, BooleanField, SubmitField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
-from app.models import User
+from app.models import User, InvitationCode
 
 class LoginForm(FlaskForm):
     username = StringField('帐号', validators=[DataRequired()])
@@ -29,6 +29,16 @@ class RegistForm(FlaskForm):
     def validate_email(self, field):
         if User.query.filter_by(email=field.data).first():
             raise ValidationError('邮箱已被注册！')
+
+class InviteRegistForm(RegistForm):
+    code = StringField('邀请码', validators=[DataRequired()])
+
+    def validate_code(self,field):
+        ic = InvitationCode.query.filter(InvitationCode.code == field.data.strip()).first()
+        if ic is None:
+            raise ValidationError('无效邀请码')
+        if not ic.state :
+            raise ValidationError('邀请码一使用')
 
 class PasswordForm(FlaskForm):
 	pwd = PasswordField('当前密码', validators=[DataRequired()])
