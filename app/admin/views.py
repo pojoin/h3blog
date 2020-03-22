@@ -243,6 +243,17 @@ def upload():
     return jsonify(res)
 
 
+@admin.route('/tags')
+@login_required
+@admin_required
+def tags():
+    '''
+    标签管理
+    '''
+    page = request.args.get('page',1,type=int)
+    tags = Tag.query.order_by(Tag.id.asc()). \
+        paginate(page, per_page=current_app.config['H3BLOG_POST_PER_PAGE'], error_out=False)
+    return   render_template('admin/tags.html',tags=tags)
 
 @admin.route('/categorys',methods=['GET'])
 @login_required

@@ -1,0 +1,30 @@
+{% extends 'admin/common/base.html' %}
+{% import "admin/macros/_patination.html" as page_macros %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div>
+        <h3>标签列表</h3> 
+        </div>
+        <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">标签</th>
+                <th scope="col">文章数量</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for t in tags.items %}
+              <tr>
+                <th scope="row">{{t.id}}</th>
+                <td>{{t.name}}</td>
+                <td>{{t.articles.count()}}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+    </div>
+    {{ page_macros.pagination_widget(tags, 'admin.tags') }}
+</div>
+{% endblock %}
