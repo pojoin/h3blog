@@ -421,3 +421,13 @@ def invit_codes():
         paginate(page, per_page=current_app.config['H3BLOG_POST_PER_PAGE'], error_out=False)
     
     return render_template('admin/invit_codes.html',codes = codes,form = form)
+
+@admin.route('/settings',methods=['GET','POST'])
+@login_required
+@admin_required
+def settings():
+    '''
+    系统设置
+    '''
+    print(current_app.config)
+    return render_template('admin/settings.html')

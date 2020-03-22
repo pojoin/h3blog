@@ -5,6 +5,7 @@ import hashlib
 
 basedir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 
+
 # SQLite URI compatible
 WIN = sys.platform.startswith('win')
 if WIN:
@@ -30,6 +31,7 @@ class BaseConfig(object):
     MAIL_PASSWORD = os.getenv('MAIL_PASSWORD')
     MAIL_DEFAULT_SENDER = ('H3BLOG Admin', MAIL_USERNAME)
 
+    H3BLOG_TITLE = os.getenv('H3BLOG_TITLE','何三笔记')
     H3BLOG_DOMAIN = os.getenv('H3BLOG_DOMAIN','www.h3blog.com')
     H3BLOG_EMAIL = os.getenv('H3BLOG_EMAIL')
     H3BLOG_POST_PER_PAGE = 10
@@ -51,6 +53,8 @@ class BaseConfig(object):
 
     BAIDU_PUSH_TOKEN = os.getenv('BAIDU_PUSH_TOKEN') #主动推送给百度链接，token是在搜索资源平台申请的推送用的准入密钥
 
+    SITEMAP_URL_SCHEME = os.getenv('SITEMAP_URL_SCHEME','http')
+    SITEMAP_MAX_URL_COUNT = os.getenv('SITEMAP_MAX_URL_COUNT',100000)
 
 class DevelopmentConfig(BaseConfig):
     DEBUG = True

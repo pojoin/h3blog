@@ -1,0 +1,52 @@
+{% extends 'admin/common/base.html' %}
+{% block content %}
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item">
+      <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">基本设置</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Contact</a>
+    </li>
+  </ul>
+  <div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+        <form class="col-8 pt-2">
+            <div class="form-group row">
+                <label for="title" class="col-sm-2 col-form-label">网站名称:</label>
+                <div class="col-sm-10">
+                    <input id="title" name="s_title" class="form-control" placeholder="何三笔记">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="domain" class="col-sm-2 col-form-label">网站域名:</label>
+                <div class="col-sm-10">
+                    <input id="domain" name="s_domain" class="form-control" placeholder="www.h3blog.com">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="keywords"" class="col-sm-2 col-form-label">关键字:</label>
+                <div class="col-sm-10">
+                    <input id="keywords" name="s_keywords" class="form-control" placeholder="python,何三笔记">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="description" class="col-sm-2 col-form-label">网站描述:</label>
+                <div class="col-sm-10">
+                    <textarea id="description" name="s_description" class="form-control" placeholder="本博客采用python语言flask框架开发"></textarea>
+                </div>
+            </div>
+            
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <button type="submit" class="btn btn-primary">保存</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
+    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
+  </div>
+{% endblock %}

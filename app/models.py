@@ -187,5 +187,5 @@ class InvitationCode(db.Model):
     code = db.Column(db.String(64),unique = True, nullable=False)
     user = db.Column(db.String(64))
     state = db.Column(db.Boolean, default=True)
-    
+
 
