@@ -1,6 +1,5 @@
 {% extends 'admin/common/base.html' %}
 {% block content %}
-{% include 'admin/common/alert.html' %}
 <div class="container">
     <div class="row">
         <a href="#" data-toggle="modal" data-target="#user-add" title="添加用户"> 添加用户</a>
@@ -44,7 +43,9 @@
                         </form>
                         <script type="text/javascript">
                            function delete_user_{{ user.id }}(){
-                               $("#delete_user_{{ user.id }}").submit() ;
+                               if(confirm('确定要删除该用户吗?')){
+                                $("#delete_user_{{ user.id }}").submit() ;
+                               }
                            }
                         </script>
                     </td>

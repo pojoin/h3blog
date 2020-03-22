@@ -48,6 +48,7 @@
             <script src="{{ url_for('admin.static',filename='layer/layer.js')}}"></script>
             <!-- 个性化 js 文件 -->
             <script src="{{ url_for('admin.static', filename='js/admin.js')}}"></script>
+            {% include 'admin/common/alert.html' %}
         {% endblock %}
     </body>
 </html>

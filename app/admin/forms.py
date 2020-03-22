@@ -39,8 +39,7 @@ class ChangePasswordForm(FlaskForm):
 
 
 class AddUserForm(FlaskForm):
-    username = StringField('用户名', validators=[DataRequired(), Length(1, 64, message='姓名长度要在1和64之间'),
-                       Regexp('^[\u4E00-\u9FFF]+$', flags=0, message='用户名必须为中文')])
+    username = StringField('用户名', validators=[DataRequired(), Length(1, 64, message='姓名长度要在1和64之间')])
     email = StringField('邮箱', validators=[DataRequired(), Length(6, 64, message='邮件长度要在6和64之间'),
                         Email(message='邮件格式不正确！')])
     role = SelectField('权限', choices=[('True', '管理员'), ('False', '一般用户') ])
@@ -61,8 +60,7 @@ class DeleteUserForm(FlaskForm):
 
 
 class EditUserForm(FlaskForm):
-    username = StringField('用户名', validators=[DataRequired(), Length(1, 64, message='姓名长度要在1和64之间'),
-                       Regexp('^[\u4E00-\u9FFF]+$', flags=0, message='用户名必须为中文')])
+    username = StringField('用户名', validators=[DataRequired(), Length(1, 64, message='姓名长度要在1和64之间')])
     email = StringField('邮箱', validators=[DataRequired(), Length(6, 64, message='邮件长度要在6和64之间'),
                         Email(message='邮件格式不正确！')])
     role = SelectField('权限', choices=[('True', '管理员'), ('False', '一般用户') ])
