@@ -5,10 +5,18 @@ from flask_sitemap import Sitemap
 from flask_login import LoginManager
 from flask_migrate import Migrate
 
+
+class AppHelper(object):
+    def init_app(self, app, db=None, directory=None, **kwargs):
+        self.app = app
+        
 db = SQLAlchemy()
 sitemap = Sitemap()
 login_manager = LoginManager()
 migrate = Migrate()
+app_helper = AppHelper()
+
+
 
 @login_manager.user_loader
 def load_user(user_id):

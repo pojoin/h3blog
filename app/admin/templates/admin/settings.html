@@ -17,25 +17,25 @@
             <div class="form-group row">
                 <label for="title" class="col-sm-2 col-form-label">网站名称:</label>
                 <div class="col-sm-10">
-                    <input id="title" name="s_title" class="form-control" placeholder="何三笔记">
+                    <input id="title" name="s_title" class="form-control" placeholder="何三笔记" value="{{config.H3BLOG_TITLE}}">
                 </div>
             </div>
             <div class="form-group row">
                 <label for="domain" class="col-sm-2 col-form-label">网站域名:</label>
                 <div class="col-sm-10">
-                    <input id="domain" name="s_domain" class="form-control" placeholder="www.h3blog.com">
+                    <input id="domain" name="s_domain" class="form-control" placeholder="www.h3blog.com" value="{{config.H3BLOG_DOMAIN}}">
                 </div>
             </div>
             <div class="form-group row">
                 <label for="keywords"" class="col-sm-2 col-form-label">关键字:</label>
                 <div class="col-sm-10">
-                    <input id="keywords" name="s_keywords" class="form-control" placeholder="python,何三笔记">
+                    <input id="keywords" name="s_keywords" class="form-control" placeholder="python,何三笔记" value="{{config.H3BLOG_KEYWORDS}}">
                 </div>
             </div>
             <div class="form-group row">
                 <label for="description" class="col-sm-2 col-form-label">网站描述:</label>
                 <div class="col-sm-10">
-                    <textarea id="description" name="s_description" class="form-control" placeholder="本博客采用python语言flask框架开发"></textarea>
+                    <textarea id="description" name="s_description" class="form-control" placeholder="本博客采用python语言flask框架开发">{{config.H3BLOG_DESCRIPTION}}</textarea>
                 </div>
             </div>
             

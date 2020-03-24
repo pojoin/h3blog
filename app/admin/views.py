@@ -1,7 +1,7 @@
 from flask import render_template, request, redirect, url_for, flash, current_app, jsonify, send_from_directory
 from flask_login import login_user, logout_user, login_required, current_user
 from . import admin
-from app.extensions import db
+from app.extensions import db,app_helper
 from .forms import AddAdminForm, LoginForm, AddUserForm, DeleteUserForm, EditUserForm, ArticleForm, \
         ChangePasswordForm, AddFolderForm, CategoryForm, RecommendForm, InvitcodeForm
 from app.models import User, Category, Tag, Article, Recommend, AccessLog, Picture, InvitationCode
@@ -9,6 +9,7 @@ import os
 from datetime import datetime
 from app.util import admin_required, author_required, isAjax, upload_file_qiniu, allowed_file, \
     baidu_push_urls, strip_tags, gen_invit_code
+from app.settings import config
 
 
 @admin.route('/', methods=['GET', 'POST'])
@@ -429,5 +430,6 @@ def settings():
     '''
     系统设置
     '''
-    print(current_app.config)
+    Cfg = config[current_app.config['CONFIG_NAME']]
+    app_helper.app.config.from_object(Cfg)
     return render_template('admin/settings.html')

@@ -6,7 +6,7 @@ from flask import Flask, render_template, request
 from flask_sqlalchemy import get_debug_queries
 from flask_wtf.csrf import CSRFError
 from app.util import pretty_date
-from app.extensions import db, sitemap, login_manager, migrate
+from app.extensions import db, sitemap, login_manager, migrate,app_helper
 from app.settings import config
 from app.template_filter import register_template_filter
 from app.models import AccessLog
@@ -19,6 +19,7 @@ def create_app(config_name=None):
 
     """ 使用工厂函数初始化程序实例"""
     app = Flask(__name__)
+    app.config['CONFIG_NAME'] = config_name
     app.config.from_object(config[config_name])
 
     register_logging(app)
@@ -63,6 +64,7 @@ def register_extensions(app):
     login_manager.init_app(app)
     sitemap.init_app(app)
     migrate.init_app(app,db=db)
+    app_helper.init_app(app)
 
     
 

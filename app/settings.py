@@ -33,6 +33,8 @@ class BaseConfig(object):
 
     H3BLOG_TITLE = os.getenv('H3BLOG_TITLE','何三笔记')
     H3BLOG_DOMAIN = os.getenv('H3BLOG_DOMAIN','www.h3blog.com')
+    H3BLOG_KEYWORDS = os.getenv('H3BLOG_KEYWORDS','python,flask,个人博客')
+    H3BLOG_DESCRIPTION = os.getenv('H3BLOG_DESCRIPTION','一个注重创作的轻博客系统，选用python语言flask框架开发，前端采用bootstrap4轻量模板，注重内容创作与工具开发 ')
     H3BLOG_EMAIL = os.getenv('H3BLOG_EMAIL')
     H3BLOG_POST_PER_PAGE = 10
     H3BLOG_MANAGE_POST_PER_PAGE = 15
@@ -56,10 +58,11 @@ class BaseConfig(object):
     SITEMAP_URL_SCHEME = os.getenv('SITEMAP_URL_SCHEME','http')
     SITEMAP_MAX_URL_COUNT = os.getenv('SITEMAP_MAX_URL_COUNT',100000)
 
+    
+
 class DevelopmentConfig(BaseConfig):
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = prefix + os.path.join(basedir, 'data-dev.db')
-
 
 class TestingConfig(BaseConfig):
     TESTING = True
@@ -70,9 +73,11 @@ class TestingConfig(BaseConfig):
 class ProductionConfig(BaseConfig):
     SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL', prefix + os.path.join(basedir, 'data.db'))
 
-
 config = {
     'development': DevelopmentConfig,
     'testing': TestingConfig,
     'production': ProductionConfig
 }
+
+if __name__ == "__main__":
+    pass
