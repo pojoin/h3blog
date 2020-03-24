@@ -431,5 +431,5 @@ def settings():
     系统设置
     '''
     Cfg = config[current_app.config['CONFIG_NAME']]
-    app_helper.app.config.from_object(Cfg)
+    # app_helper.app.config.from_object(Cfg)
     return render_template('admin/settings.html')
