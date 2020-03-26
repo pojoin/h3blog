@@ -260,4 +260,4 @@ def bing_bg():
     '''
     获取背景地址
     '''
-    return get_bing_img_url()
+    return redirect(get_bing_img_url())
