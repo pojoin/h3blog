@@ -195,6 +195,17 @@ def gen_invit_code(count,long):
         r.append(card_code)
     return r
 
+
+def get_bing_img_url(format='js',idx=0):
+    '''
+    获取bing每日壁纸url
+    '''
+    url = 'https://cn.bing.com/HPImageArchive.aspx?format={}&idx={}&n=1'.format(format,idx)
+    resp = requests.get(url,timeout=5).text
+    data = json.loads(resp)
+    return 'https://cn.bing.com{}'.format(data['images'][0]['url'])
+
+
 if __name__ == "__main__":
     codes = gen_invit_code(1000,15)
     print(codes)

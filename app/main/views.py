@@ -7,6 +7,7 @@ from app.models import Article, Tag, Category, article_tag, Recommend, User, \
 from .forms import SearchForm, LoginForm,RegistForm, PasswordForm, InviteRegistForm
 from app.extensions import db
 from ..import db, sitemap
+from app.util import get_bing_img_url
 
 
 @main.before_request
@@ -252,3 +253,11 @@ def password():
         flash({'success':'修改密码成功'})
         return redirect(url_for('.profile'))
     return render_template('password.html',form=form)
+
+
+@main.route('/bing_bg')
+def bing_bg():
+    '''
+    获取背景地址
+    '''
+    return get_bing_img_url()
