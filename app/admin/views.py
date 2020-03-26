@@ -3,8 +3,9 @@ from flask_login import login_user, logout_user, login_required, current_user
 from . import admin
 from app.extensions import db,app_helper
 from .forms import AddAdminForm, LoginForm, AddUserForm, DeleteUserForm, EditUserForm, ArticleForm, \
-        ChangePasswordForm, AddFolderForm, CategoryForm, RecommendForm, InvitcodeForm
-from app.models import User, Category, Tag, Article, Recommend, AccessLog, Picture, InvitationCode
+        ChangePasswordForm, AddFolderForm, CategoryForm, RecommendForm, InvitcodeForm, OnlineToolForm
+from app.models import User, Category, Tag, Article, Recommend, AccessLog, Picture, InvitationCode, \
+    OnlineTool
 import os
 from datetime import datetime
 from app.util import admin_required, author_required, isAjax, upload_file_qiniu, allowed_file, \
@@ -433,3 +434,59 @@ def settings():
     Cfg = config[current_app.config['CONFIG_NAME']]
     # app_helper.app.config.from_object(Cfg)
     return render_template('admin/settings.html')
+
+@admin.route('/online_tools')
+@login_required
+@admin_required
+def online_tools():
+    '''
+    在线工具
+    '''
+    page = request.args.get('page',1, type=int)
+    tools = OnlineTool.query.order_by(OnlineTool.sn.desc()). \
+        paginate(page, per_page=current_app.config['H3BLOG_POST_PER_PAGE'], error_out=False)
+    return render_template('admin/online_tools.html',tools = tools)
+
+
+@admin.route('/online_tools/add',methods=['GET','POST'])
+@login_required
+@admin_required
+def online_tools_add():
+    '''
+    添加在线工具
+    '''
+    form = OnlineToolForm()
+    if form.validate_on_submit():
+        r = OnlineTool(title=form.title.data.strip(),
+                desp=form.desp.data,
+                url=form.url.data,
+                img = form.img.data,
+                sn = form.sn.data,
+                state = form.state.data)
+        db.session.add(r)
+        db.session.commit()  
+        return redirect(url_for('admin.online_tools'))
+
+    return render_template('admin/online_tool.html',form=form)
+
+@admin.route('/online_tools/edit/<id>',methods=['GET','POST'])
+@login_required
+@admin_required
+def online_tools_edit(id):
+    """
+    修改推荐
+    """
+    r = OnlineTool.query.get(id)
+    form = OnlineToolForm()
+    if form.validate_on_submit():
+        r.title = form.title.data.strip()
+        r.desp = form.desp.data
+        r.url = form.url.data
+        r.img = form.img.data
+        r.sn = form.sn.data
+        r.state = form.state.data
+        db.session.commit()
+        return redirect(url_for('admin.online_tools'))
+
+    form = OnlineToolForm(obj=r)
+    return render_template('admin/online_tool.html',form=form)

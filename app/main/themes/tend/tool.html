@@ -17,6 +17,25 @@
 </nav>
 <!--end-->
 
-<h1>开发中，敬请期待!!!</h1>
+<div class="card border-0 rounded-0 mb-3" style="background: #f4f4f4;">
+    {% if tools |length > 0 %}
+    <div class="card-columns">
+        {% for t in tools %}
+        <div class="card h-100">
+            <img src="{{t.img}}" class="card-img-top" alt="{{t.title}}">
+            <div class="card-body">
+                <h5 class="card-title">{{t.title}}</h5>
+                <p class="card-text">{{t.desp}}</p>
+                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <h1>开发中，敬请期待!!!</h1>
+    {% endif %}
+</div>
+
+
 
 {% endblock %}

@@ -188,4 +188,16 @@ class InvitationCode(db.Model):
     user = db.Column(db.String(64))
     state = db.Column(db.Boolean, default=True)
 
-
+class OnlineTool(db.Model):
+    '''
+    在线工具
+    '''
+    __tablename__ = 'online_tool'
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(120))
+    desp = db.Column(db.String(120))
+    img = db.Column(db.String(200))
+    url = db.Column(db.String(200))
+    sn = db.Column(db.Integer,default=0)
+    state = db.Column(db.Integer, default=1)
+    timestamp = db.Column(db.DateTime, default=datetime.now)

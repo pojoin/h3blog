@@ -2,7 +2,8 @@ from flask import render_template, redirect, request, current_app, \
     url_for, g, send_from_directory, abort, flash
 from flask_login import login_user, logout_user, login_required, current_user
 from . import main
-from ..models import Article, Tag, Category, article_tag, Recommend, User, InvitationCode
+from app.models import Article, Tag, Category, article_tag, Recommend, User, \
+     InvitationCode, OnlineTool
 from .forms import SearchForm, LoginForm,RegistForm, PasswordForm, InviteRegistForm
 from app.extensions import db
 from ..import db, sitemap
@@ -177,7 +178,9 @@ def robots():
 
 @main.route('/tool/')
 def tool():
-    return render_template('tool.html')
+    tools = OnlineTool.query.order_by(OnlineTool.sn.desc()). \
+        filter(OnlineTool.state == True).all()
+    return render_template('tool.html',tools = tools)
 
 
 @main.route('/login', methods=['GET', 'POST'])

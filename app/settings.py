@@ -42,7 +42,7 @@ class BaseConfig(object):
     H3BLOG_SLOW_QUERY_THRESHOLD = 1
     H3BLOG_REGISTER_INVITECODE = True   # 是否开启邀请码注册
 
-    H3BLOG_UPLOAD_TYPE = 'qiniu' # 默认本地上传
+    H3BLOG_UPLOAD_TYPE = '' # 默认本地上传
     H3BLOG_UPLOAD_PATH = os.path.join(basedir, 'uploads')
     H3BLOG_ALLOWED_IMAGE_EXTENSIONS = ['png', 'jpg', 'jpeg', 'gif', 'webp']
 
