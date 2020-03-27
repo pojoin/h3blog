@@ -26,7 +26,7 @@
             <div class="card-body">
                 <h5 class="card-title">{{t.title}}</h5>
                 <p class="card-text">{{t.desp}}</p>
-                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                <button class="btn btn-outline-primary btn-sm btn-block" onclick="openUrl('{{t.url}}')">打开</button>
             </div>
         </div>
         {% endfor %}
@@ -36,6 +36,13 @@
     {% endif %}
 </div>
 
+{% endblock %}
 
-
+{% block js%}
+{{super()}}
+<script>
+    function openUrl(url){
+        window.location.href=url;
+    }
+</script>
 {% endblock %}

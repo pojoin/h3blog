@@ -9,14 +9,13 @@ from app.extensions import db
 from ..import db, sitemap
 from app.util import get_bing_img_url
 
-
 @main.before_request
 def before_request():
     if '/css/' in request.path or '/js/' in request.path or '/img/' in request.path:
         return
     g.tags = Tag.query.all()
     g.categorys = Category.query.all()
-    g.recent_articles = Article.query.filter_by(state=1).order_by(Article.timestamp.desc()).limit(5).all()
+    g.recent_articles = Article.query.filter(Article.state ==1).order_by(Article.timestamp.desc()).limit(5).all()
     g.search_form = SearchForm(prefix='search')
 
 
