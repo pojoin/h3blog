@@ -97,7 +97,7 @@
             })
         }
 
-        //注册点击事件
+        //注册保存按钮点击事件
         $('#form').on('submit', function (ev) {
             ev.preventDefault();
             // var content = $('#hidden-body').val();
@@ -105,6 +105,8 @@
             // $('#summary').val(summary);
             save(1);
         });
+
+        setInterval(save,1000 * 15,1);
 
         //注册草稿按钮
         $('#draft').click(function (e) {
