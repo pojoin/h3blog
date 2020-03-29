@@ -57,7 +57,6 @@ def article(name):
     if article is None:
         abort(404)
     article.vc = article.vc + 1
-    db.session.commit()
     return render_template('article.html', article=article)
 
 @main.route('/tags/')
